@@ -9,11 +9,18 @@ const ShopContextProvider = ({ children }) => {
   const [visibleMenu, setVisibleMenu] = useState(false)
   const navigate = useNavigate()
 
+  const currency = 'VNĐ'
+  const formatMoney = (number) => {
+    return Number(number).toLocaleString("vi-VN");
+  };
+
   const value = {
     products,
     navigate,
     visibleMenu,
-    setVisibleMenu
+    setVisibleMenu,
+    formatMoney,
+    currency
   }
 
   return (

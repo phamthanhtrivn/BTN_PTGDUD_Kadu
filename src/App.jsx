@@ -5,10 +5,10 @@ import Home from "./pages/Home"
 import Contact from "./pages/Contact"
 import Login from "./pages/Login"
 import Cart from "./pages/Cart"
-import ProductItem from "./components/ProductItem"
 import Products from "./pages/Products"
 import About from "./pages/About"
 import SidebarMenu from "./components/SidebarMenu"
+import Product from "./pages/Product"
 
 const App = () => {
   return (
@@ -19,7 +19,7 @@ const App = () => {
         <Route path="/" element={<Home />}/>
         <Route path="/about" element={<About />}/>
         <Route path="/products" element={<Products />}/>
-        <Route path="/product/:id" element={<ProductItem />}/>
+        <Route path="/product/:id" element={<Product />}/>
         <Route path="/contact" element={<Contact />}/>
         <Route path="/login" element={<Login />}/>
         <Route path="/cart" element={<Cart />}/>

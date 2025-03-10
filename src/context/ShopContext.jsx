@@ -8,19 +8,16 @@ export const ShopContext = createContext()
 const ShopContextProvider = ({ children }) => {
   const [visibleMenu, setVisibleMenu] = useState(false)
   const navigate = useNavigate()
-
   const value = {
     products,
     navigate,
     visibleMenu,
     setVisibleMenu
   }
-
   return (
     <ShopContext.Provider value={value}>
       {children}
     </ShopContext.Provider>
   )
 }
-
 export default ShopContextProvider;

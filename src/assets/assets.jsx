@@ -4,17 +4,16 @@ import search_icon from "./search_icon.png"
 import profile_icon from "./profile_icon.png"
 import menu_icon from "./menu_icon.png"
 import dropdown_icon from "./dropdown_icon.png"
-
-
+import avatar from "./bigAvatar.png"
 export const images = {
   logo,
   search_icon,
   cart_icon,
   profile_icon,
   menu_icon,
-  dropdown_icon
+  dropdown_icon,
+  avatar
 };
-
 export const products = [
   {
     id: 1,

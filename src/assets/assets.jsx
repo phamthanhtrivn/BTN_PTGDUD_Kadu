@@ -5,6 +5,7 @@ import profile_icon from "./profile_icon.png"
 import menu_icon from "./menu_icon.png"
 import dropdown_icon from "./dropdown_icon.png"
 import avatar from "./bigAvatar.png"
+
 export const images = {
   logo,
   search_icon,
@@ -14,6 +15,7 @@ export const images = {
   dropdown_icon,
   avatar
 };
+
 export const products = [
   {
     id: 1,
@@ -273,6 +275,7 @@ export const products = [
     image: "https://bizweb.dktcdn.net/thumb/1024x1024/100/334/874/products/8112-1.jpg?v=1695354604240"
   },
 ];
+
 export const articles = [
   {
     id: 1,

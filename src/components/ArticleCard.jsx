@@ -11,7 +11,7 @@ const formatDate = (time) => {
 };
 const ArticleCard = ({ article, onClick }) => {
       return (
-            <div className="w-full max-w-xs bg-white rounded-md shadow-sm hover:shadow-md hover:-translate-y-1 cursor-pointer transition-shadow duration-200 overflow-hidden flex flex-col h-full" onClick={onClick}>
+            <div className="w-full max-w-xs bg-white rounded-md shadow-sm hover:shadow-md hover:-translate-y-1 cursor-pointer transition-all duration-300 overflow-hidden flex flex-col h-full" onClick={onClick}>
 
                   {/* Ảnh bài viết */}
                   {article.image && (

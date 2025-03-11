@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useEffect, useRef, useState } from "react";
@@ -23,7 +24,7 @@ const Login = () => {
   const inputUsername = useRef();
   const inputPassword = useRef();
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 rounded-2xl">
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
         <h2 className="text-2xl font-bold text-center mb-6">ĐĂNG NHẬP</h2>
 
@@ -65,8 +66,8 @@ const Login = () => {
 
         {/* Link Đăng ký và Quên mật khẩu */}
         <div className="flex justify-between items-center mt-4 text-sm">
-          <NavLink to="/login/register" className="text-green-900 font-bold hover:underline">ĐĂNG KÝ NGAY</NavLink>
-          <NavLink to="/login/forgotPassword" className="text-gray-600 hover:underline">Quên mật khẩu?</NavLink>
+          <NavLink to="/register" className="text-green-900 font-bold hover:underline">ĐĂNG KÝ NGAY</NavLink>
+          <NavLink to="/forgot-password" className="text-gray-600 hover:underline">Quên mật khẩu?</NavLink>
         </div>
       </div>
     </div>

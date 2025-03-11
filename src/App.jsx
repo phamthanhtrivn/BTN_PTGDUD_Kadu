@@ -5,8 +5,8 @@ import Home from "./pages/Home"
 import Contact from "./pages/Contact"
 import Login from "./pages/Login"
 import Cart from "./pages/Cart"
-import ProductItem from "./components/ProductItem"
 import Products from "./pages/Products"
+import ProductDetail from "./pages/ProductDetail"
 import About from "./pages/About"
 import SidebarMenu from "./components/SidebarMenu"
 import Register from "./pages/Register"
@@ -25,7 +25,7 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/products" element={<Products />} />
-          <Route path="/product/:id" element={<ProductItem />} />
+          <Route path="/product/:id" element={<ProductDetail />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />

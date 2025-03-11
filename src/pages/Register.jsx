@@ -40,7 +40,7 @@ const Register = () => {
   const inputPhone = useRef();
   const aLogin = useRef();
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100 p-4">
+    <div className="flex items-center justify-center min-h-screen bg-gray-100 p-4 rounded-2xl">
       <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-2xl">
         <h2 className="text-2xl font-bold text-center mb-6">ĐĂNG KÝ</h2>
         <form className="grid grid-cols-1 sm:grid-cols-2 gap-4">

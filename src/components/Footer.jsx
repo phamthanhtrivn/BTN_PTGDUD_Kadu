@@ -4,7 +4,7 @@ import { images } from "../assets/assets"
 const Footer = () => {
   return (
     <div>
-      <div className="flex flex-col sm:grid grid-cols-[3fr_1fr_1fr] gap-14 mt-10 p-10 text-sm bg-gray-700 text-white">
+      <div className="flex flex-col sm:grid grid-cols-[3fr_1fr_1fr] gap-14 mt-10 p-10 text-sm bg-[#005E4F] text-white rounded-2xl">
         <div>
           <img src={images.logo} alt="logo" className="mb-5 w-32" />
           <p className="w-full md:w-2/3">

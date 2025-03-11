@@ -1,0 +1,8 @@
+.line-clamp-2 {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      /* Số dòng tối đa */
+      -webkit-box-orient: vertical;
+      /* Bắt buộc để line-clamp hoạt động */
+      overflow: hidden;
+}

@@ -2,16 +2,15 @@ import { NavLink, Link } from "react-router-dom";
 import { useContext } from "react";
 import { images } from "../assets/assets";
 import { ShopContext } from "../context/ShopContext";
-
+import { useAuth } from "../context/AuthContext";
 const Header = () => {
   const { setVisibleMenu, navigate } = useContext(ShopContext);
-
+  const { authUser } = useAuth();
   return (
     <div className="sticky top-0 z-50 bg-white flex items-center justify-between mb-10 py-5 font-medium border-b border-gray-400">
       <Link to="/">
         <img src={images.logo} className="w-36" alt="logo" />
       </Link>
-
       <ul className="hidden sm:flex gap-5 text-sm">
         <NavLink to="/" className="flex flex-col items-center gap-1">
           <p>TRANG CHỦ</p>
@@ -50,12 +49,20 @@ const Header = () => {
           alt="search_icon"
           className="w-5 cursor-pointer"
         />
-        <img
-            src={images.profile_icon}
-            alt="profile_icon"
-            className="w-5 cursor-pointer"
-            onClick={() => navigate("/login")}
-          />  
+        {authUser() ? (
+          <img
+            src={images.avatar}
+            alt="profile_avatar"
+            className="w-10 cursor-pointer"
+            onClick={() => navigate("/profile")}
+          />
+        ) : (<img
+          src={images.profile_icon}
+          alt="profile_icon"
+          className="w-5 cursor-pointer"
+          onClick={() => navigate("/login")}
+        />)
+        }
         <Link to="/cart" className="relative">
           <img src={images.cart_icon} className="w-5 min-w-5" alt="cart_icon" />
           <p className="absolute right-[-5px] top-[-5px] text-center w-4 leading-4 bg-red-500 text-white aspect-square rounded-full text-[10px]">
@@ -69,7 +76,7 @@ const Header = () => {
           alt="menu_icon"
         />
       </div>
-      
+
     </div>
   );
 };

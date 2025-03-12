@@ -6,7 +6,7 @@ const Footer = () => {
     <div>
       <div className="flex flex-col sm:grid grid-cols-[3fr_1fr_1fr] gap-14 mt-10 p-10 text-sm bg-[#005E4F] text-white rounded-2xl">
         <div>
-          <img src={images.logo} alt="logo" className="mb-5 w-32" />
+          <img src={images.logo_footer} alt="logo" className="mb-5 w-32" />
           <p className="w-full md:w-2/3">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga libero
             nulla quos provident tenetur? Aut pariatur possimus itaque nostrum
@@ -37,7 +37,6 @@ const Footer = () => {
       </div>
 
       <div>
-        <hr className="text-gray-300" />
         <p className="py-5 text-sm text-center">
           Copyright 2025@iuh.edu.com - All Right Reserved.
         </p>

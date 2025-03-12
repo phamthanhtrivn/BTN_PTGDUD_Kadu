@@ -5,6 +5,7 @@ import profile_icon from "./profile_icon.png"
 import menu_icon from "./menu_icon.png"
 import dropdown_icon from "./dropdown_icon.png"
 import avatar from "./bigAvatar.png"
+import logo_footer from "./logo_footer.svg"
 
 export const images = {
   logo,
@@ -13,7 +14,8 @@ export const images = {
   profile_icon,
   menu_icon,
   dropdown_icon,
-  avatar
+  avatar,
+  logo_footer
 };
 
 export const products = [

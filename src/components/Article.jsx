@@ -10,7 +10,7 @@ const Article = ({ article }) => {
     <div className="p-5 rounded-2xl bg-[#f4f4f4]">
       <h2 className="font-bold text-2xl">{article.title}</h2>
       <span>
-        <i class="fa-solid fa-calendar-days my-4"></i>{" "}
+      <i className="fa-solid fa-calendar-days my-4"></i>
         {formatTime(article.timeRelease)}
       </span>
       <div className="body">

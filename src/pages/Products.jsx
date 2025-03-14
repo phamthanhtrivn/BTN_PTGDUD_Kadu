@@ -10,8 +10,10 @@ const Products = () => {
   const [showFilter, setShowFilter] = useState(false);
   const [category, setCategory] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [filterProducts, setFilterProducts] = useState(products);
+  const [filterProducts, setFilterProducts] = useState([]);
   const [sortType, setSortType] = useState("");
+
+  console.log("Products from ShopContext:", products); // Kiểm tra dữ liệu products
 
   const productPerPage = 8;
   const indexOfLastProduct = currentPage * productPerPage;
@@ -63,13 +65,24 @@ const Products = () => {
         break;
     }
 
+    console.log("Filtered products:", filteredP); // Kiểm tra dữ liệu sau khi lọc
     setFilterProducts(filteredP);
     setCurrentPage(1);
   };
 
   useEffect(() => {
-    applyFilters();
+    if (products && products.length > 0) {
+      applyFilters();
+    } else {
+      setFilterProducts([]); // Đảm bảo filterProducts là mảng rỗng nếu không có dữ liệu
+    }
   }, [category, products, sortType, search]);
+
+  if (!products || products.length === 0) {
+    return <div>Đang tải sản phẩm...</div>;
+  }
+
+  console.log("Current products to display:", currentProducts); // Kiểm tra currentProducts
 
   return (
     <>
@@ -160,15 +173,13 @@ const Products = () => {
             </div>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-5">
-            {currentProducts.map((item, index) => (
-              <ProductItem
-                key={index}
-                id={item.id}
-                name={item.name}
-                price={item.price}
-                image={item.image}
-              />
-            ))}
+            {currentProducts.length > 0 ? (
+              currentProducts.map((item, index) => (
+                <ProductItem key={item.id} product={item} />
+              ))
+            ) : (
+              <div>Không có sản phẩm nào để hiển thị</div>
+            )}
           </div>
           <div className="flex justify-center gap-4 mt-8">
             {Array.from({ length: totalPage }, (_, index) => (

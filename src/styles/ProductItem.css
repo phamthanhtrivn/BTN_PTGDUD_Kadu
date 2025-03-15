@@ -50,3 +50,8 @@
     background: #ff4d4d;
     color: white;
 }
+/* Trong tệp CSS của bạn */
+.bg-custom-green {
+    background-color: #035d4f;
+  }
+  

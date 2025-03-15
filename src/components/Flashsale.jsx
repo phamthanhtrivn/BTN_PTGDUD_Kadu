@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import ProductItem from "./ProductItem";
+import "../styles/ProductItem.css"
 
 const FlashSale = () => {
   const [flashSaleProducts, setFlashSaleProducts] = useState([]);
@@ -52,12 +53,12 @@ const FlashSale = () => {
   }, []);
 
   return (
-    <div className="bg-blue-100 p-6 rounded-2xl shadow-lg mb-8">
+    <div className="bg-custom-green p-6 rounded-2xl shadow-lg mb-8">
       <div className="flex items-center justify-between">
-        <h2 className="text-3xl font-bold text-red-600 flex items-center">
+        <h2 className="text-3xl font-bold text-yellow-200 flex items-center">
           🔥 FLASH SALE - GIẢM GIÁ CỰC SỐC
         </h2>
-        <div className="text-red-700 text-xl font-semibold">
+        <div className="text-yellow-200 text-xl font-semibold">
           ⏳ {timeLeft.hours}h {timeLeft.minutes}m {timeLeft.seconds}s
         </div>
       </div>

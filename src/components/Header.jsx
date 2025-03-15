@@ -4,7 +4,13 @@ import { images } from "../assets/assets";
 import { ShopContext } from "../context/ShopContext";
 import { useAuth } from "../context/AuthContext";
 const Header = () => {
-  const { setVisibleMenu, navigate } = useContext(ShopContext);
+  const {
+    setVisibleMenu,
+    navigate,
+    setShowSearchBar,
+    showSearchBar,
+    getCartTotalQuantity,
+  } = useContext(ShopContext);
   const { authUser } = useAuth();
   return (
     <div className="sticky top-0 z-50 bg-white flex items-center justify-between mb-10 py-5 font-medium border-b border-gray-400">
@@ -18,17 +24,27 @@ const Header = () => {
         </NavLink>
         <NavLink to="/products" className="flex flex-col items-center gap-1">
           <div className="group relative flex flex-col items-center ">
-            <p className="flex gap-2">SẢN PHẨM <span>&#128899;</span></p>
+            <p className="flex gap-2">
+              SẢN PHẨM <span>&#128899;</span>
+            </p>
             <hr className="w-1/2 border-none h-[1.5px] bg-gray-700 hidden" />
             <div className="group-hover:block hidden absolute dropdown-menu top-[15px] left-0 pt-4">
               <div className="flex flex-col gap-2 w-40 bg-slate-100 text-gray-500 rounded">
-                <p className="cursor-pointer hover:text-white hover:bg-gray-600 py-2 px-6">Bút viết</p>
-                <p className="cursor-pointer hover:text-white hover:bg-gray-600 py-2 px-6">Sách vở</p>
-                <p className="cursor-pointer hover:text-white hover:bg-gray-600 py-2 px-6">Đèn học</p>
+                <p className="cursor-pointer hover:text-white hover:bg-gray-600 py-2 px-6">
+                  Bút viết
+                </p>
+                <p className="cursor-pointer hover:text-white hover:bg-gray-600 py-2 px-6">
+                  Sách vở
+                </p>
+                <p className="cursor-pointer hover:text-white hover:bg-gray-600 py-2 px-6">
+                  Đèn học
+                </p>
                 <p className="cursor-pointer hover:text-white hover:bg-gray-600 py-2 px-6">
                   Văn phòng phẩm
                 </p>
-                <p className="cursor-pointer hover:text-white hover:bg-gray-600 py-2 px-6">Giấy in</p>
+                <p className="cursor-pointer hover:text-white hover:bg-gray-600 py-2 px-6">
+                  Giấy in
+                </p>
               </div>
             </div>
           </div>
@@ -48,6 +64,7 @@ const Header = () => {
           src={images.search_icon}
           alt="search_icon"
           className="w-5 cursor-pointer"
+          onClick={() => setShowSearchBar(!showSearchBar)}
         />
         {authUser() ? (
           <img
@@ -56,18 +73,25 @@ const Header = () => {
             className="w-10 cursor-pointer"
             onClick={() => navigate("/profile")}
           />
-        ) : (<img
-          src={images.profile_icon}
-          alt="profile_icon"
-          className="w-5 cursor-pointer"
-          onClick={() => navigate("/login")}
-        />)
-        }
-        <Link to="/cart" className="relative">
-          <img src={images.cart_icon} className="w-5 min-w-5" alt="cart_icon" />
-          <p className="absolute right-[-5px] top-[-5px] text-center w-4 leading-4 bg-red-500 text-white aspect-square rounded-full text-[10px]">
-            {0}
-          </p>
+        ) : (
+          <img
+            src={images.profile_icon}
+            alt="profile_icon"
+            className="w-5 cursor-pointer"
+            onClick={() => navigate("/login")}
+          />
+        )}
+        <Link to="/cart" className="relative inline-block">
+          <div className="relative">
+            <img
+              src={images.cart_icon}
+              className="w-6 h-6 transition-transform duration-300 ease-in-out hover:scale-110"
+              alt="cart_icon"
+            />
+            <p className="absolute -right-2 -top-1 flex items-center justify-center w-5 h-5 bg-red-500 text-white rounded-full text-[10px] font-bold shadow-md">
+              {getCartTotalQuantity()}
+            </p>
+          </div>
         </Link>
         <img
           onClick={() => setVisibleMenu(true)}
@@ -76,7 +100,6 @@ const Header = () => {
           alt="menu_icon"
         />
       </div>
-
     </div>
   );
 };

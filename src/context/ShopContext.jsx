@@ -11,9 +11,10 @@ const ShopContextProvider = ({ children }) => {
   const [search, setSearch] = useState('')
   const [cartItems, setCartItems] = useState([])
   const navigate = useNavigate()
+  const delivery_fee = 50000
 
   const currency = 'VNĐ'
-  const formatMoney = (number) => {
+  const formatMoney = (number = 0) => {
     return Number(number).toLocaleString("vi-VN");
   };
 
@@ -35,6 +36,18 @@ const ShopContextProvider = ({ children }) => {
     })
   }
 
+  const handleUpdateQuantityCart = (productID, quantity) => {
+    setCartItems((prevCart) => {
+      return prevCart.map((item) => item.productID === productID ? { ...item, quantity} : item)
+    })
+  }
+
+  const handleDeleteCartItem = (productID) => {
+    setCartItems((prevCart) => {
+      return prevCart.filter((item) => item.productID !== productID)
+    })
+  }
+
   const value = {
     products,
     navigate,
@@ -48,7 +61,11 @@ const ShopContextProvider = ({ children }) => {
     setSearch,
     getCartTotalQuantity,
     handleAddToCart,
-    cartItems
+    handleUpdateQuantityCart,
+    handleDeleteCartItem,
+    cartItems,
+    delivery_fee,
+    setCartItems
   }
   return (
     <ShopContext.Provider value={value}>

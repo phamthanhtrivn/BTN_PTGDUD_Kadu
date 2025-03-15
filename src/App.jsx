@@ -11,6 +11,7 @@ import About from "./pages/About"
 import SidebarMenu from "./components/SidebarMenu"
 import Register from "./pages/Register"
 import ForgotPassword from "./pages/ForgotPassword"
+import PlaceOrder from "./pages/PlaceOrder"
 import { AuthProvider } from "./context/AuthContext"
 import { ToastContainer } from 'react-toastify';
 
@@ -31,6 +32,7 @@ const App = () => {
           <Route path="/register" element={<Register />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/place-order" element={<PlaceOrder />} />
         </Routes>
         <Footer />
       </div>

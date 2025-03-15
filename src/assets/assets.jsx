@@ -9,6 +9,7 @@ import logo_footer from "./logo_footer.svg";
 import cross_icon from "./cross_icon.png";
 import star_dull_icon from "./star_dull_icon.png"
 import star_icon from "./star_icon.png"
+import empty_cart from "./empty_cart.png"
 
 export const images = {
   logo,
@@ -21,7 +22,8 @@ export const images = {
   logo_footer,
   cross_icon,
   star_dull_icon,
-  star_icon
+  star_icon,
+  empty_cart
 };
 
 export const products = [

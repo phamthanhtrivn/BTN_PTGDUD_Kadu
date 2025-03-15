@@ -19,7 +19,7 @@ const ProductItem = ({ id, name, price, image }) => {
       </p>
       <button
         onClick={() => {
-          handleAddToCart(id);
+          handleAddToCart(Number(id));
         }}
         className="flex items-center gap-3 justify-center mt-3 border border-[#005E4F] text-[#005E4F] rounded py-2 px-4 hover:text-white hover:bg-[#005E4F] transition-all duration-300"
       >

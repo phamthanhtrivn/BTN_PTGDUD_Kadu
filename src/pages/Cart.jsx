@@ -21,12 +21,14 @@ function Cart() {
     setTotal(total);
   };
 
+  
+
   const renderCart = () => {
     let carts = [];
     if (cartItems.length > 0) {
       cartItems.map((item) => {
         const product = products.find(
-          (product) => product.id === item.productID
+          (product) => product.id === item.id
         );
         carts.push({ ...product, quantity: item.quantity });
         return item;

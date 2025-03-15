@@ -24,27 +24,27 @@ const ShopContextProvider = ({ children }) => {
     }, 0)
   }
 
-  const handleAddToCart = (productID, quantity = 1) => {
+  const handleAddToCart = (id, quantity = 1) => {
     setCartItems((prevCart) => {
-      const existing = prevCart.find((item) => item.productID === productID)
+      const existing = prevCart.find((item) => item.id === id)
       if (existing) {
-        return prevCart.map((item) => item.productID === productID ? { ...item, quantity: item.quantity + quantity } : item)
+        return prevCart.map((item) => item.id === id ? { ...item, quantity: item.quantity + quantity } : item)
       }
       else {
-        return [...prevCart, {productID, quantity}]
+        return [...prevCart, {id, quantity}]
       }
     })
   }
 
-  const handleUpdateQuantityCart = (productID, quantity) => {
+  const handleUpdateQuantityCart = (id, quantity) => {
     setCartItems((prevCart) => {
-      return prevCart.map((item) => item.productID === productID ? { ...item, quantity} : item)
+      return prevCart.map((item) => item.id === id ? { ...item, quantity} : item)
     })
   }
 
-  const handleDeleteCartItem = (productID) => {
+  const handleDeleteCartItem = (id) => {
     setCartItems((prevCart) => {
-      return prevCart.filter((item) => item.productID !== productID)
+      return prevCart.filter((item) => item.id !== id)
     })
   }
 

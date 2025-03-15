@@ -59,7 +59,7 @@ const ProductDetail = () => {
             />
             <button
               onClick={() => {
-                handleAddToCart(id, Number(quantity));
+                handleAddToCart(Number(id), Number(quantity));
               }}
               className="flex items-center gap-3 justify-center mt-3 border border-[#005E4F] hover:text-[#005E4F] hover:bg-white rounded py-2 px-4 text-white bg-[#005E4F] transition-all duration-300"
             >

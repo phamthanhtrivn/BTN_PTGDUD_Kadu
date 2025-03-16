@@ -4,10 +4,14 @@ import { useAuth } from "../context/AuthContext";
 import { useEffect, useRef, useState } from "react";
 
 const Login = () => {
-  const { user, login, authUser } = useAuth();
+  const { login, authUser } = useAuth();
   const [isLogging, setIsLogging] = useState(false);
   const navigate = useNavigate();
   const handleLogin = () => {
+    if (inputUsername.current.value === "" || inputPassword.current.value === "") {
+      alert("Vui lòng nhập đầy đủ thông tin");
+      return;
+    }
     const userData = {
       username: inputUsername.current.value,
       password: inputPassword.current.value,
@@ -20,7 +24,7 @@ const Login = () => {
       if (authUser()) navigate("/");
       else alert("Tài khoản hoặc mật khẩu không đúng");
     }
-  }, [isLogging, user, navigate]);
+  }, [isLogging]);
   const inputUsername = useRef();
   const inputPassword = useRef();
   return (

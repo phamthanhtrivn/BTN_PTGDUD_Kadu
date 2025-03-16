@@ -19,6 +19,7 @@ const ArticleCard = ({ article, onClick }) => {
                               src={article.image}
                               alt={article.title}
                               className="w-full h-36 object-cover flex-shrink-0"
+                              loading="Lazy"
                         />
                   )}
 

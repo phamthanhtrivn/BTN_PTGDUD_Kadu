@@ -43,6 +43,7 @@ const Article = ({ article }) => {
                   src={content.image}
                   alt={`Content Image ${index}`}
                   style={{ maxWidth: "100%" }}
+                  loading="Lazy"
                 />
               </div>
             );

@@ -6,7 +6,7 @@ const ProductItem = ({ id, name, price, image }) => {
   const { currency, formatMoney, handleAddToCart } = useContext(ShopContext);
 
   return (
-    <div className="flex flex-col items-center text-center cursor-pointer hover:shadow-xl hover:scale-105 transition-all duration-300 ease-in-out w-full box-border p-5 shadow-lg sm:shadow-none">
+    <div className="flex flex-col items-center justify-between text-center cursor-pointer hover:shadow-xl hover:scale-105 transition-all duration-300 ease-in-out w-full box-border p-5 shadow-lg sm:shadow-none">
       {/* Link chỉ bao quanh ảnh */}
       <Link to={`/product/${id}`}>
         <img src={image} alt={name} />

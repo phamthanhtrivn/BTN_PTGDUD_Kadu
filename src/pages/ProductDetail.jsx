@@ -97,14 +97,14 @@ const ProductDetail = () => {
                   </td>
                   <td className="px-4 py-3 text-gray-600">{product.origin}</td>
                 </tr>
-                {/* {product.attributes.map((item, index) => (
+                {product.attributes?.map((item, index) => (
                   <tr key={index} className="odd:bg-gray-50 even:bg-gray-100">
                     <td className="px-4 py-3 font-medium text-gray-700">
                       {item.k}
                     </td>
                     <td className="px-4 py-3 text-gray-600">{item.v}</td>
                   </tr>
-                ))} */}
+                ))}
                 <tr className="odd:bg-gray-50 even:bg-gray-100">
                   <td className="px-4 py-3 font-medium text-gray-700">
                     Khuyến cáo

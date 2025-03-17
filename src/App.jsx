@@ -17,7 +17,6 @@ import PrivateRoute from "./context/PrivateRoute"
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 import UserDetail from "./pages/UserDetail"
-import Category from "./components/Category"
 import Orders from "./pages/Orders"
 const App = () => {
   return (
@@ -41,7 +40,6 @@ const App = () => {
           <Route path="/place-order" element={<PlaceOrder />} />
           <Route path="/orders" element={<Orders />} />
           <Route path="/user" element={<UserDetail />} />
-          <Route path="/category/:id" element={<Category />} />
         </Routes>
         <Footer />
       </div>

@@ -11,7 +11,7 @@ const ProductDetail = () => {
     useContext(ShopContext);
   const [product, setProduct] = useState({});
 
-  const [quantity, setQuantity] = useState(0);
+  const [quantity, setQuantity] = useState(1);
 
   const dataProduct = () => {
     products.map((product) => {

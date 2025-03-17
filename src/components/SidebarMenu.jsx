@@ -8,8 +8,8 @@ const SidebarMenu = () => {
 
   return (
     <div
-      className={`z-100 absolute top-0 right-0 bottom-0 overflow-hidden bg-white transition-all duration-500 ${
-        visibleMenu ? "w-full" : "w-0"
+      className={`z-100 fixed top-0 right-[-10px] bottom-0 overflow-hidden bg-white transition-all duration-500 ${
+        visibleMenu ? "w-screen h-screen" : "w-0"
       }`}
     >
       <div className="flex flex-col">

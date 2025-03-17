@@ -13,9 +13,9 @@ export const AuthProvider = ({ children }) => {
     setUser(userData);
   };
   const authUser = async () => {
-    // truong- 123456
-    // admin -admin
-    // user- user
+    // truong@gmail- 123456
+    // admin@gmail -admin
+    // user@gmail- user
     try {
       const response = await fetch("http://localhost:3001/auth/login", {
         method: "POST",
@@ -68,15 +68,15 @@ export const AuthProvider = ({ children }) => {
         });
     }
   }, []);
-  const getUsernameFromToken = () => {
-    const token = localStorage.getItem("token");
+  const getEmailFromToken = () => {
+    const token = localStorage.getItem("site");
     if (!token) return null;
 
     const payload = JSON.parse(atob(token.split(".")[1]));
-    return payload.username;
+    return payload.email;
   }
   return (
-    <AuthContext.Provider value={{ getUsernameFromToken, token, user, login, authUser, logOut }}>
+    <AuthContext.Provider value={{ getEmailFromToken, token, user, login, authUser, logOut }}>
       {children}
     </AuthContext.Provider>
   );

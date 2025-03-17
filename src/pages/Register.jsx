@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useState, useRef } from "react";
+import { useRef } from "react";
 import React from "react";
 import { toast } from "react-toastify";
 
@@ -63,7 +63,7 @@ const Register = () => {
       toast.error("Số điện thoại phải có 10 số");
       returnVal = false;
     }
-    else if (new RegExp("^[a-zA-Z0-9._%+-]+@gmail\.com$").test(inputEmail.current.value) === false) {
+    else if (new RegExp("^[a-zA-Z0-9._%+-]+@gmail\\.com$").test(inputEmail.current.value) === false) {
       toast.error("Email phải có dạng @gmail.com");
       returnVal = false;
     }

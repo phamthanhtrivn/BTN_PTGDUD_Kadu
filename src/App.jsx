@@ -16,6 +16,9 @@ import { AuthProvider } from "./context/AuthContext"
 import PrivateRoute from "./context/PrivateRoute"
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
+import UserDetail from "./pages/UserDetail"
+import Category from "./components/Category"
+import Orders from "./pages/Orders"
 const App = () => {
   return (
     <AuthProvider>

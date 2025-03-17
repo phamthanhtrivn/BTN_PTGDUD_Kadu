@@ -2,7 +2,6 @@ import { NavLink, Link } from "react-router-dom";
 import { useContext } from "react";
 import { images } from "../assets/assets";
 import { ShopContext } from "../context/ShopContext";
-import { useAuth } from "../context/AuthContext";
 const Header = () => {
   const {
     setVisibleMenu,
@@ -11,7 +10,6 @@ const Header = () => {
     showSearchBar,
     getCartTotalQuantity,
   } = useContext(ShopContext);
-  const { authUser } = useAuth();
   return (
     <div className="sticky top-0 z-50 bg-white flex items-center justify-between mb-10 py-5 font-medium border-b border-gray-400">
       <Link to="/">
@@ -66,7 +64,7 @@ const Header = () => {
           className="w-5 cursor-pointer"
           onClick={() => setShowSearchBar(!showSearchBar)}
         />
-        {authUser() ? (
+        {localStorage.getItem("site") != null ? (
           <img
             src={images.avatar}
             alt="profile_avatar"

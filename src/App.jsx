@@ -13,11 +13,9 @@ import Register from "./pages/Register"
 import ForgotPassword from "./pages/ForgotPassword"
 import PlaceOrder from "./pages/PlaceOrder"
 import { AuthProvider } from "./context/AuthContext"
+import PrivateRoute from "./context/PrivateRoute"
 import { ToastContainer } from 'react-toastify';
-import UserDetail from "./pages/UserDetail"
-import Category from "./components/Category"
-import Orders from "./pages/Orders"
-
+import 'react-toastify/dist/ReactToastify.css'
 const App = () => {
   return (
     <AuthProvider>
@@ -26,7 +24,9 @@ const App = () => {
         <Header />
         <SidebarMenu />
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route element={<PrivateRoute />}>
+            <Route path="/" element={<Home />} />
+          </Route>
           <Route path="/about" element={<About />} />
           <Route path="/products" element={<Products />} />
           <Route path="/product/:id" element={<ProductDetail />} />

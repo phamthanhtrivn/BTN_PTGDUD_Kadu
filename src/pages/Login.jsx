@@ -5,16 +5,16 @@ import { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 
 const Login = () => {
-  const { login, authUser } = useAuth();
+  const { login, authUser, getEmailFromToken } = useAuth();
   const [isLogging, setIsLogging] = useState(false);
   const navigate = useNavigate();
   const handleLogin = () => {
-    if (inputUsername.current.value === "" || inputPassword.current.value === "") {
+    if (inputEmail.current.value === "" || inputPassword.current.value === "") {
       toast.error("Vui lòng nhập đầy đủ thông tin");
       return;
     }
     const userData = {
-      username: inputUsername.current.value,
+      email: inputEmail.current.value,
       password: inputPassword.current.value,
     }
     login(userData);
@@ -22,11 +22,14 @@ const Login = () => {
   }
   useEffect(() => {
     if (isLogging) {
-      if (authUser()) navigate("/");
+      if (authUser()) {
+        navigate("/");
+      }
       else toast.error("Tài khoản hoặc mật khẩu không đúng");
     }
+    console.log(getEmailFromToken());
   }, [isLogging]);
-  const inputUsername = useRef();
+  const inputEmail = useRef();
   const inputPassword = useRef();
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 rounded-2xl">
@@ -42,9 +45,9 @@ const Login = () => {
 
         {/* Form nhập tài khoản */}
         <input
-          ref={inputUsername}
-          type="text"
-          placeholder="Tài khoản"
+          ref={inputEmail}
+          type="email"
+          placeholder="Email"
           className="w-full p-3 border border-gray-300 rounded-md mb-3 focus:ring-2 focus:ring-green-500 outline-none"
         />
         <input

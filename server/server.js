@@ -19,7 +19,7 @@ mongoose.connect(process.env.MONGO_URI)
 // Tạo Schema
 const UserSchema = new mongoose.Schema({
       id: Number,
-      username: String,
+      name: String,
       password: String,
       email: String,
       phone: String
@@ -42,11 +42,11 @@ app.use(express.json());
 
 // API Login
 app.post("/auth/login", async (req, res) => {
-      const { username, password } = req.body;
+      const { email, password } = req.body;
 
-      // Tìm trực tiếp trong MongoDB Atlas với điều kiện `username`
-      const findUser = await User.findOne({ username: username });
-
+      // Tìm trực tiếp trong MongoDB Atlas với điều kiện 
+      const findUser = await User.findOne({ email: email });
+      console.log(email, password, findUser);
       // Kiểm tra nếu không tìm thấy user
       if (!findUser) {
             return res.status(401).json({ message: "Sai tài khoản!" });
@@ -59,11 +59,11 @@ app.post("/auth/login", async (req, res) => {
       }
 
       // Tạo token JWT
-      const token = jwt.sign({ username }, JWT_SECRET, { expiresIn: "1h" });
+      const token = jwt.sign({ email }, JWT_SECRET, { expiresIn: "1h" });
 
       // Trả về kết quả
       res.status(200).json({
-            user: { username },
+            user: { email },
             token,
       });
 });
@@ -81,7 +81,7 @@ app.post("/auth/verifyToken", (req, res) => {
                   return res.status(403).json({ message: "Token không hợp lệ!" });
             }
             res.status(200).json({
-                  user: { username: decoded.username },
+                  user: { email: decoded.email },
             });
       });
 });
@@ -104,6 +104,7 @@ app.post("/auth/register", async (req, res) => {
 
             // Tạo tài khoản mới
             const newUser = new User({
+                  id: User.length + 1,
                   username,
                   password: hashedPassword,
                   email,
@@ -123,5 +124,3 @@ app.post("/auth/register", async (req, res) => {
 app.listen(PORT, () => {
       console.log(`Server is running on http://localhost:${PORT}`);
 });
-
-// mongodb+srv://truong:<db_password>@cluster0.rwpfk.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0

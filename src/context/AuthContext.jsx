@@ -68,8 +68,15 @@ export const AuthProvider = ({ children }) => {
         });
     }
   }, []);
+  const getUsernameFromToken = () => {
+    const token = localStorage.getItem("token");
+    if (!token) return null;
+
+    const payload = JSON.parse(atob(token.split(".")[1]));
+    return payload.username;
+  }
   return (
-    <AuthContext.Provider value={{ token, user, login, authUser, logOut }}>
+    <AuthContext.Provider value={{ getUsernameFromToken, token, user, login, authUser, logOut }}>
       {children}
     </AuthContext.Provider>
   );

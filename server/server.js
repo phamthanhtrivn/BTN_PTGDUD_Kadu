@@ -67,7 +67,6 @@ app.post("/auth/login", async (req, res) => {
             token,
       });
 });
-
 // API xác thực token
 app.post("/auth/verifyToken", (req, res) => {
       const authHeader = req.headers["authorization"];
@@ -96,7 +95,10 @@ app.post("/auth/register", async (req, res) => {
             if (existingUser) {
                   return res.status(401).json({ message: "Tài khoản đã tồn tại!" });
             }
-
+            const existingEmail = await User.findOne({ email: email });
+            if (existingEmail) {
+                  return res.status(401).json({ message: "Email đã tồn tại!" });
+            }
             // Hash mật khẩu
             const hashedPassword = await bcrypt.hash(password, 10);
 

@@ -2,6 +2,7 @@
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useEffect, useRef, useState } from "react";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const { login, authUser, getEmailFromToken } = useAuth();

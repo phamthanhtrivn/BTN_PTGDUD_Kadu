@@ -16,6 +16,9 @@ import { AuthProvider } from "./context/AuthContext"
 import PrivateRoute from "./context/PrivateRoute"
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
+import UserDetail from "./pages/UserDetail"
+import Category from "./components/Category"
+import Orders from "./pages/Orders"
 import { ResetPassword } from "./pages/ForgotPassword"
 const App = () => {
   return (
@@ -37,6 +40,9 @@ const App = () => {
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/place-order" element={<PlaceOrder />} />
+          <Route path="/orders" element={<Orders />} />
+          <Route path="/user" element={<UserDetail />} />
+          <Route path="/category/:id" element={<Category />} />
           <Route path="/reset-password" element={<ResetPassword />} />
         </Routes>
         <Footer />

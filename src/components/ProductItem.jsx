@@ -21,7 +21,7 @@ const ProductItem = ({ id, name, price, image }) => {
         onClick={() => {
           handleAddToCart(Number(id));
         }}
-        className="flex items-center gap-3 justify-center mt-3 border border-[#005E4F] text-[#005E4F] rounded py-2 px-4 hover:text-white hover:bg-[#005E4F] transition-all duration-300"
+        className="text-xs sm:text-sm flex items-center gap-3 justify-center mt-3 border border-[#005E4F] text-[#005E4F] rounded py-2 px-4 hover:text-white hover:bg-[#005E4F] transition-all duration-300"
       >
         <i className="fa-solid fa-cart-shopping"></i>
         <span>Thêm giỏ hàng</span>

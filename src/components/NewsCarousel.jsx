@@ -3,6 +3,8 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
+import '../styles/NewsCarousel.css';
+import { Link } from "react-router-dom"; // Thêm import Link
 
 const NewsCarousel = () => {
   const [news, setNews] = useState([]);
@@ -15,38 +17,72 @@ const NewsCarousel = () => {
   }, []);
 
   if (news.length === 0) {
-    return <p className="text-center text-red-500">⚠ Không có tin tức nào!</p>;
+    return (
+      <div className="flex items-center justify-center py-12">
+        <p className="text-lg font-medium text-red-500 animate-pulse">
+          ⚠ Đang tải tin tức...
+        </p>
+      </div>
+    );
   }
 
   return (
-    <div className="w-full max-w-6xl mx-auto my-6">
-      <h2 className="text-2xl font-bold text-center mb-4">📰 Tin tức mới nhất</h2>
+    <section className="w-full max-w-7xl mx-auto px-4 py-8">
+      <h2 className="text-3xl font-bold text-gray-800 text-center mb-8 relative">
+        <span className="relative z-10">📰 Tin tức nổi bật</span>
+        <span className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full" />
+      </h2>
 
       <Swiper
         modules={[Autoplay, Pagination]}
-        spaceBetween={20}
-        slidesPerView={1} // Mặc định là 1 trên mobile
+        spaceBetween={30}
+        slidesPerView={1}
         breakpoints={{
-          640: { slidesPerView: 2 }, // 2 trên tablet
-          1024: { slidesPerView: 3 }, // 3 trên màn hình lớn
+          640: { slidesPerView: 2 },
+          1024: { slidesPerView: 3 },
         }}
-        autoplay={{ delay: 3000, disableOnInteraction: false }}
-        pagination={{ clickable: true }}
+        autoplay={{
+          delay: 4000,
+          disableOnInteraction: false,
+        }}
+        pagination={{
+          clickable: true,
+          dynamicBullets: true,
+        }}
         loop={true}
-        speed={1200} // Tốc độ trượt mượt hơn
-        className="rounded-lg shadow-md"
+        speed={1000}
+        className="pb-12"
       >
         {news.map((item) => (
           <SwiperSlide key={item.id}>
-            <div className="bg-white p-4 rounded-lg shadow-md transition-all hover:scale-105">
-              <img src={item.image} alt={item.title} className="w-full h-48 object-cover rounded-md mb-2" />
-              <h3 className="text-lg font-semibold">{item.title}</h3>
-              <p className="text-gray-600 text-sm">{item.description}</p>
-            </div>
+            <article className="group bg-white rounded-xl shadow-lg overflow-hidden transform transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
+              <div className="relative">
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  className="w-full h-56 object-cover transition-transform duration-300 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-gray-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              </div>
+              <div className="p-5">
+                <h3 className="text-xl font-semibold text-gray-800 line-clamp-2 mb-2 group-hover:text-blue-600 transition-colors">
+                  {item.title}
+                </h3>
+                <p className="text-gray-600 text-sm line-clamp-3">
+                  {item.description}
+                </p>
+                <Link
+                  to={`/news/${item.id}`} // Điều hướng đến trang chi tiết với ID
+                  className="mt-4 inline-block text-blue-500 font-medium opacity-0 group-hover:opacity-100 transform translate-y-2 group-hover:translate-y-0 transition-all duration-300"
+                >
+                  Đọc thêm →
+                </Link>
+              </div>
+            </article>
           </SwiperSlide>
         ))}
       </Swiper>
-    </div>
+    </section>
   );
 };
 

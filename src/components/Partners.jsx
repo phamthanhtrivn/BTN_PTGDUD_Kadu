@@ -15,27 +15,35 @@ const partners = [
     { id: 5, name: "Deli", logo: "https://vanphongphamminaco.com/wp-content/uploads/2022/10/Deli_logo_2.webp" },
     { id: 6, name: "Casio", logo: "https://cdn.worldvectorlogo.com/logos/casio-1121.svg" },
   ];
-  
-
+ 
   export default function PartnerSlider() {
     return (
-      <div className="p-4 bg-gray-100 rounded-xl">
-        <h2 className="text-xl font-bold mb-4 text-orange-500">🤝 Đối tác kinh doanh</h2>
+      <div className="p-6 bg-gray-100 rounded-xl">
+        <h2 className="text-3xl font-bold mb-6 bg-gradient-to-r from-blue-400 to-red-700 text-transparent bg-clip-text">
+          🤝 Đối tác kinh doanh
+        </h2>
         <Swiper
           modules={[Navigation]}
-          spaceBetween={10}
+          spaceBetween={20}
           slidesPerView={3}
           navigation
           breakpoints={{
-            640: { slidesPerView: 2 },
-            1024: { slidesPerView: 4 },
+            640: { slidesPerView: 2, spaceBetween: 15 },
+            1024: { slidesPerView: 4, spaceBetween: 20 },
+            1280: { slidesPerView: 5, spaceBetween: 25 },
           }}
         >
-          {partners.map((partner, index) => (
-            <SwiperSlide key={index}>
-              <div className="flex flex-col items-center p-4 bg-white rounded-lg shadow-md">
-                <img src={partner.logo} alt={partner.name} className="h-16 mb-2" />
-                <p className="text-lg font-semibold">{partner.name}</p>
+          {partners.map((partner) => (
+            <SwiperSlide key={partner.id}>
+              <div className="flex flex-col items-center p-4 bg-white rounded-lg shadow-md border border-gray-200 hover:shadow-lg transition-shadow duration-300">
+                <img
+                  src={partner.logo}
+                  alt={partner.name}
+                  className="h-16 md:h-20 lg:h-24 object-contain mb-3"
+                />
+                <p className="text-lg md:text-xl font-semibold text-gray-800">
+                  {partner.name}
+                </p>
               </div>
             </SwiperSlide>
           ))}

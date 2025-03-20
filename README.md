@@ -15,3 +15,6 @@ Cài đặt thêm thư viện:
 npm install react-bootstrap
 pm install swiper@latest
 npm install lucide-react
+
+update thêm thư viện
+npm install react-icons

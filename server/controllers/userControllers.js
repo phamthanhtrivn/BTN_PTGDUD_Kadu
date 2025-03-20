@@ -26,7 +26,7 @@ export const register = async (req, res) => {
 
         await newUser.save();
 
-        res.status(201).json({ message: "Đăng ký thành công!" });
+        res.status(200).json({ message: "Đăng ký thành công!" });
     } catch (error) {
         console.error("❌ Lỗi:", error);
         res.status(500).json({ message: "Lỗi server!" });
@@ -76,18 +76,15 @@ export const verifyToken = (req, res) => {
 };
 
 
-export const updateUserAddress = async (req, res) => {
+export const getUserInfo = async (req, res) => {
     try {
-        const { email, address } = req.body
+        const { email } = req.body
         const userData = await User.findOne({ email })
         if (!userData) {
-            res.json({success: false, message: "Người dùng không tồn tại!"})
+            return res.json({ success: false, message: "Người dùng ko tồn tại!" });
         }
 
-        userData.address = address;
-
-        await userData.save()
-        res.json({success: false, message: "Cập nhật đại chỉ thành công!"})
+        return res.json({ success: true, user: userData})
     } catch (error) {
         console.log(error);
         res.json({success: false, message: error.message})

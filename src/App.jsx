@@ -18,9 +18,11 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 import UserDetail from "./pages/UserDetail"
 import Orders from "./pages/Orders"
+import ShopContextProvider from "./context/ShopContext"
 const App = () => {
   return (
     <AuthProvider>
+      <ShopContextProvider>
       <ToastContainer />
       <div className="px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]">
         <Header />
@@ -43,6 +45,7 @@ const App = () => {
         </Routes>
         <Footer />
       </div>
+      </ShopContextProvider>
     </AuthProvider>
   )
 }

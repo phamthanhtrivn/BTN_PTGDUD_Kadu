@@ -1,19 +1,31 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useContext, useEffect, useState } from "react";
 import { ShopContext } from "../context/ShopContext";
+import axios from "axios";
+import { toast } from "react-toastify";
 const PlaceOrder = () => {
   const {
-    products,
     currency,
-    cartItems,
     navigate,
     formatMoney,
     delivery_fee,
-    getCartTotalQuantity,
+    totalQuantity,
+    cartData,
+    token,
+    setCartItems
   } = useContext(ShopContext);
 
-  const [cartData, setCartData] = useState([]);
   const [total, setTotal] = useState(0);
+  const [formInfo, setFormInfo] = useState({
+    id: "",
+    name: "",
+    email: "",
+    phone: "",
+    city: "",
+    district: "",
+    ward: "",
+    street: "",
+  });
 
   const cartTotal = () => {
     let total = 0;
@@ -25,28 +37,83 @@ const PlaceOrder = () => {
     setTotal(total);
   };
 
-  const renderCart = () => {
-    let carts = [];
-    if (cartItems.length > 0) {
-      cartItems.map((item) => {
-        const product = products.find((product) => product.id === item.id);
-        carts.push({ ...product, quantity: item.quantity });
-        return item;
-      });
+  const getUserInfo = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:3001/auth/get",
+        {},
+        { headers: { token } }
+      );
+      if (response.data.success) {
+        const user = response.data.user;
+        const address = user.address || {};
+
+        setFormInfo({
+          id: user._id,
+          name: user.name || "",
+          phone: user.phone || "",
+          email: user.email || "",
+          city: address.city || "",
+          district: address.district || "",
+          ward: address.ward || "",
+          street: address.street || "",
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message);
     }
-    setCartData(carts);
   };
 
-  useEffect(() => {
-    renderCart();
-  }, []);
+  const onChangeHandler = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+
+    setFormInfo((data) => ({ ...data, [name]: value }));
+  };
+
+  const handleSubmitOrder = async (e) => {
+    e.preventDefault();
+    const orderData = {
+      userID: formInfo.id,
+      address: {
+        city: formInfo.city,
+        district: formInfo.district,
+        ward: formInfo.ward,
+        street: formInfo.street,
+      },
+      items: cartData,
+      amount: total + delivery_fee
+    }
+
+   try {
+    const response = await axios.post("http://localhost:3001/order/place", orderData, { headers: { token }})
+
+    if (response.data.success) {
+      toast.success(response.data.message)
+      setCartItems([])
+      navigate('/orders')
+    }
+   } catch (error) {
+    console.log(error);
+    toast.error(error.message)
+   }
+    
+  };
 
   useEffect(() => {
     cartTotal();
   }, [cartData]);
 
+  useEffect(() => {
+    getUserInfo();
+  }, []);
+
   return (
-    <form className="flex flex-col md:flex-row justify-between items-start gap-10">
+    <form
+      onSubmit={handleSubmitOrder}
+      className="flex flex-col md:flex-row justify-between items-start gap-10"
+    >
       <div className="w-full flex flex-col gap-4 lg:w-1/3">
         <div className="text-xl sm:text-2xl mb-1">
           <p>Thông tin nhận hàng</p>
@@ -56,7 +123,9 @@ const PlaceOrder = () => {
           className="border border-gray-300 rounded py-1.5 px-3.5 w-full"
           type="text"
           placeholder="Họ và tên..."
-          name="lastName"
+          name="name"
+          value={formInfo.name}
+          onChange={onChangeHandler}
         />
         <input
           required
@@ -64,6 +133,8 @@ const PlaceOrder = () => {
           type="email"
           placeholder="Email..."
           name="email"
+          value={formInfo.email}
+          onChange={onChangeHandler}
         />
         <input
           required
@@ -71,6 +142,8 @@ const PlaceOrder = () => {
           type="number"
           placeholder="Số điện thoại..."
           name="phone"
+          value={formInfo.phone}
+          onChange={onChangeHandler}
         />
         <div className="flex gap-3 ">
           <input
@@ -79,6 +152,8 @@ const PlaceOrder = () => {
             type="text"
             placeholder="Tỉnh thành..."
             name="city"
+            value={formInfo.city}
+            onChange={onChangeHandler}
           />
           <input
             required
@@ -86,6 +161,8 @@ const PlaceOrder = () => {
             type="text"
             placeholder="Quận huyện..."
             name="district"
+            value={formInfo.district}
+            onChange={onChangeHandler}
           />
         </div>
         <div className="flex gap-3 ">
@@ -95,6 +172,8 @@ const PlaceOrder = () => {
             type="text"
             placeholder="Phường xã"
             name="ward"
+            value={formInfo.ward}
+            onChange={onChangeHandler}
           />
           <input
             required
@@ -102,15 +181,15 @@ const PlaceOrder = () => {
             type="text"
             placeholder="Số địa chỉ..."
             name="street"
+            value={formInfo.street}
+            onChange={onChangeHandler}
           />
         </div>
       </div>
 
-      
-
       <div className="w-full flex flex-col justify-center gap-5 lg:w-1/3">
         <div className="text-xl sm:text-2xl">
-          <p>Đơn hàng ({getCartTotalQuantity()} sản phẩm) </p>
+          <p>Đơn hàng ({totalQuantity} sản phẩm) </p>
         </div>
         <div>
           {cartData.map((item, index) => (
@@ -184,7 +263,7 @@ const PlaceOrder = () => {
             <div className="w-full sm:w-[250px]">
               <div className="w-full text-end">
                 <button
-                  onClick={() => navigate("/orders")}
+                  // onClick={() => navigate("/orders")}
                   className="font-medium bg-[#005E4F] text-white text-sm my-8 px-8 py-3 cursor-pointer border border-[#005E4F] hover:text-[#005E4F] hover:bg-white transition-all duration-300 rounded"
                 >
                   ĐẶT HÀNG

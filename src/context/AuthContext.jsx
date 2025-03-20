@@ -13,15 +13,12 @@ export const AuthProvider = ({ children }) => {
   const login = (userData) => {
     setUser(userData);
   };
-
-  const backend_url = import.meta.env.BACKEND_URL;
-
   const authUser = async () => {
     // truong@gmail- 123456
     // admin@gmail -admin
     // user@gmail- user
     try {
-      const response = await fetch(backend_url + "/auth/login", {
+      const response = await fetch("http://localhost:3001/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -42,7 +39,7 @@ export const AuthProvider = ({ children }) => {
       console.error("Lỗi đăng nhập:", err.message);
       alert(err.message);
     }
-  };
+  }
   // Hàm xử lý đăng xuất
   const logOut = () => {
     setUser(null);
@@ -55,11 +52,11 @@ export const AuthProvider = ({ children }) => {
     const tokenFromStorage = localStorage.getItem("site");
     if (tokenFromStorage) {
       // Gọi API xác thực token hoặc decode token ở đây
-      fetch(backend_url + "/auth/verifyToken", {
+      fetch("http://localhost:3001/auth/verifyToken", {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${tokenFromStorage}`,
-        },
+          "Authorization": `Bearer ${tokenFromStorage}`
+        }
       })
         .then((res) => res.json())
         .then((data) => {
@@ -72,26 +69,15 @@ export const AuthProvider = ({ children }) => {
         });
     }
   }, []);
-
   const getEmailFromToken = () => {
     const token = localStorage.getItem("site");
     if (!token) return null;
 
     const payload = JSON.parse(atob(token.split(".")[1]));
     return payload.email;
-  };
+  }
   return (
-    <AuthContext.Provider
-      value={{
-        getEmailFromToken,
-        token,
-        user,
-        login,
-        authUser,
-        logOut,
-        backend_url,
-      }}
-    >
+    <AuthContext.Provider value={{ getEmailFromToken, token, user, login, authUser, logOut }}>
       {children}
     </AuthContext.Provider>
   );

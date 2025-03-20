@@ -14,11 +14,11 @@ function Orders() {
         return null;
       }
 
-      const response = await axios.post("http://localhost:3001/order/list", {}, {headers: {token}})
+      const response = await axios.post("http://localhost:3001/order/list", {}, { headers: { token } })
       if (response.data.success) {
         setOrderData(response.data.orders.reverse());
-        
-        
+
+
       }
 
     } catch (error) {
@@ -26,16 +26,12 @@ function Orders() {
       toast.error(error.message)
     }
   }
-
-  console.log(orderData);
-  
-
   useEffect(() => {
     loadOrderData()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token])
 
-  return  (
+  return (
     <div className="container mx-auto p-4">
       <h2 className="text-2xl font-bold mb-6">Các Đơn Hàng Của Tôi</h2>
       {orderData.length > 0 ? (

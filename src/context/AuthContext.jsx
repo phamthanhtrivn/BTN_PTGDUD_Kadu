@@ -4,6 +4,7 @@ import { createContext, useState, useContext, useEffect } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import React from "react";
+
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
@@ -18,7 +19,7 @@ export const AuthProvider = ({ children }) => {
     // admin@gmail -admin
     // user@gmail- user
     try {
-      const response = await fetch("http://localhost:3001/login", {
+      const response = await fetch("http://localhost:3001/auth/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

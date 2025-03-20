@@ -2,7 +2,9 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import User from '../models/userModel.js';
 import ResetToken from '../models/resetTokenModel.js';
+import nodemailer from 'nodemailer';
 const JWT_SECRET = process.env.JWT_SECRET;
+
 
 export const register = async (req, res) => {
     const { name, password, email, phone } = req.body;
@@ -21,14 +23,18 @@ export const register = async (req, res) => {
             name,
             password: hashedPassword,
             email,
-            phone
+            phone,
+            address: {
+                city: "",
+                district: "",
+                ward: "",
+                street: "",
+            }
         });
-
         await newUser.save();
-
         res.status(200).json({ message: "Đăng ký thành công!" });
     } catch (error) {
-        console.error("❌ Lỗi:", error);
+        console.error(error);
         res.status(500).json({ message: "Lỗi server!" });
     }
 };
@@ -54,7 +60,6 @@ export const login = async (req, res) => {
             token,
         });
     } catch (error) {
-        console.error("❌ Lỗi:", error);
         res.status(500).json({ message: "Lỗi server!" });
     }
 };
@@ -75,7 +80,6 @@ export const verifyToken = (req, res) => {
     });
 };
 
-
 export const getUserInfo = async (req, res) => {
     try {
         const { email } = req.body
@@ -83,7 +87,6 @@ export const getUserInfo = async (req, res) => {
         if (!userData) {
             return res.json({ success: false, message: "Người dùng ko tồn tại!" });
         }
-
         return res.json({ success: true, user: userData })
     } catch (error) {
         console.log(error);
@@ -172,5 +175,14 @@ export const resetPassword = async (req, res) => {
 
     } catch (error) {
         res.status(400).json({ message: "Token không hợp lệ hoặc đã hết hạn!" });
+    }
+}
+export const updateUserInfo = async (req, res) => {
+    try {
+        const { user } = req.body;
+        await User.findOneAndUpdate({ email: user.email }, { ...user });
+        return res.json({ success: true, message: "Cập nhật thông tin thành công!" });
+    } catch (error) {
+        res.json({ success: false, message: error.message })
     }
 }

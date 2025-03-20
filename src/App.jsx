@@ -43,7 +43,7 @@ const App = () => {
             <Route path="/place-order" element={<PlaceOrder />} />
             <Route path="/orders" element={<Orders />} />
             <Route path="/user" element={<UserDetail />} />
-            <Route path="/category/:id" element={<Category />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
           </Routes>
           <Footer />
         </div>

@@ -14,7 +14,7 @@ const ShopContextProvider = ({ children }) => {
   const [showSearchBar, setShowSearchBar] = useState(false);
   const [search, setSearch] = useState("");
   const [cartItems, setCartItems] = useState([]);
-  const [cartData, setCartData] = useState([]); 
+  const [cartData, setCartData] = useState([]);
   const [totalQuantity, setTotalQuantity] = useState(0);
   const { token } = useAuth()
   const navigate = useNavigate();
@@ -67,7 +67,7 @@ const ShopContextProvider = ({ children }) => {
       try {
         await axios.post(
           "http://localhost:3001/cart/update",
-          { productID: id, quantity },  
+          { productID: id, quantity },
           { headers: { token } }
         );
       } catch (error) {
@@ -104,21 +104,21 @@ const ShopContextProvider = ({ children }) => {
           {},
           { headers: { token } }
         );
-  
+
         if (response.data.success) {
           const newCartItems = response.data.cartData.map((item) => ({
             id: item.productID,
             quantity: item.quantity,
           }));
           setCartItems(newCartItems);
-  
+
           const updatedCartData = newCartItems
             .map((item) => {
               const product = products.find((product) => product.id === item.id);
               return product ? { ...product, quantity: item.quantity } : null;
             })
             .filter((item) => item !== null);
-  
+
           setCartData(updatedCartData);
           calculateTotalQuantity();
         }
@@ -128,17 +128,21 @@ const ShopContextProvider = ({ children }) => {
       toast.error(error.message);
     }
   };
-  
+
 
   useEffect(() => {
     if (token) {
       renderCart();
+    } else {
+      setCartItems([]);
+      setCartData([]);
+      setTotalQuantity(0);
     }
   }, [token]);
 
   useEffect(() => {
     renderCart();
-  }, []); 
+  }, []);
 
   useEffect(() => {
     const updatedCartData = cartItems
@@ -149,7 +153,7 @@ const ShopContextProvider = ({ children }) => {
       .filter((item) => item !== null);
 
     setCartData(updatedCartData);
-    calculateTotalQuantity(); 
+    calculateTotalQuantity();
   }, [cartItems, products]);
 
   const value = {
@@ -169,7 +173,7 @@ const ShopContextProvider = ({ children }) => {
     handleDeleteCartItem,
     cartItems,
     setCartItems,
-    cartData, 
+    cartData,
     setCartData,
     delivery_fee,
     token

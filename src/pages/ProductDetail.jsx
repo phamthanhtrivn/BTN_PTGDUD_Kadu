@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { ShopContext } from "../context/ShopContext";
 import { images } from "../assets/assets";
 import RelatedProduct from "../components/RelatedProduct";
+import { toast } from "react-toastify";
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -59,6 +60,10 @@ const ProductDetail = () => {
             />
             <button
               onClick={() => {
+                if (!quantity || isNaN(quantity)) {
+                  toast.error("Vui lòng chọn số lượng sản phẩm");
+                  return;
+                }
                 handleAddToCart(Number(id), Number(quantity));
               }}
               className="flex items-center gap-3 justify-center mt-3 border border-[#005E4F] hover:text-[#005E4F] hover:bg-white rounded py-2 px-4 text-white bg-[#005E4F] transition-all duration-300"

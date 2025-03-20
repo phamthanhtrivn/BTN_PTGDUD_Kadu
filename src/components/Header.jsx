@@ -65,9 +65,9 @@ const Header = () => {
         />
         <div className="relative" ref={dropdownRef}>
           <img
-            src={images.profile_icon}
+            src={token ? images.bigAvatar : images.profile_icon}
             alt="profile_icon"
-            className="w-5 cursor-pointer"
+            className={token ? "w-10 cursor-pointer" : "w-5 cursor-pointer"}
             onClick={() =>
               token ? setShowDropdown(!showDropdown) : navigate("/login")
             }

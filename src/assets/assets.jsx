@@ -10,7 +10,8 @@ import cross_icon from "./cross_icon.png";
 import star_dull_icon from "./star_dull_icon.png"
 import star_icon from "./star_icon.png"
 import empty_cart from "./empty_cart.png"
-
+import bigAvatar from "./bigAvatar.png"
+import background from "./background.jpg"
 export const images = {
   logo,
   search_icon,
@@ -23,7 +24,9 @@ export const images = {
   cross_icon,
   star_dull_icon,
   star_icon,
-  empty_cart
+  empty_cart,
+  bigAvatar,
+  background,
 };
 
 export const products = [

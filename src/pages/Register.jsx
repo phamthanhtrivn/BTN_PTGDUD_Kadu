@@ -11,7 +11,7 @@ const Register = () => {
       return;
     }
     const info = {
-      username: inputName.current.value,
+      name: inputName.current.value,
       password: inputPassword.current.value,
       email: inputEmail.current.value,
       phone: inputPhone.current.value,
@@ -29,7 +29,6 @@ const Register = () => {
 
       if (response.status === 200) {
         toast.success(data.message);
-        aLogin.current.click(); // Chuyển hướng sang trang login
         navigate("/login");
       } else {
         toast.error(data.message); // Thông báo lỗi từ server

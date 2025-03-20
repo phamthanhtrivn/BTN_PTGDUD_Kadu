@@ -11,7 +11,7 @@ const ForgotPassword = () => {
   const handleForgotPassword = async () => {
     setIsLoading(true);
     try {
-      const res = await axios.post("http://localhost:3001/api/forgot-password", { email: inputEmail.current.value });
+      const res = await axios.post("http://localhost:3001/auth/forgot-password", { email: inputEmail.current.value });
       toast.success(`✅ ${res.data.message}`);
     } catch (err) {
       // Lấy message từ response của server
@@ -93,7 +93,7 @@ const ResetPassword = () => {
     }
     setIsLoading(true); // 🔄 Bắt đầu loading
     try {
-      const res = await axios.post("http://localhost:3001/api/reset-password", { token, newPassword });
+      const res = await axios.post("http://localhost:3001/auth/reset-password", { token, newPassword });
       toast.success(`✅ ${res.data.message}`);
     } catch (err) {
       // Lấy message từ response của server

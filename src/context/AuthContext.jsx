@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useState, useContext, useEffect } from "react";
 import { toast } from "react-toastify";
@@ -13,11 +14,11 @@ export const AuthProvider = ({ children }) => {
     setUser(userData);
   };
   const authUser = async () => {
-    // truong@gmail- 123456
+    // truongnaiduc18@gmail- 123456
     // admin@gmail -admin
     // user@gmail- user
     try {
-      const response = await fetch("http://localhost:3001/auth/login", {
+      const response = await fetch("http://localhost:3001/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

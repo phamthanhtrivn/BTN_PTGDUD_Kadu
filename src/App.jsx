@@ -17,36 +17,37 @@ import PrivateRoute from "./context/PrivateRoute"
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
 import UserDetail from "./pages/UserDetail"
-import Category from "./components/Category"
 import Orders from "./pages/Orders"
+import ShopContextProvider from "./context/ShopContext"
 import { ResetPassword } from "./pages/ForgotPassword"
 const App = () => {
   return (
     <AuthProvider>
-      <ToastContainer />
-      <div className="px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]">
-        <Header />
-        <SidebarMenu />
-        <Routes>
-          <Route element={<PrivateRoute />}>
-            <Route path="/" element={<Home />} />
-          </Route>
-          <Route path="/about" element={<About />} />
-          <Route path="/products" element={<Products />} />
-          <Route path="/product/:id" element={<ProductDetail />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/place-order" element={<PlaceOrder />} />
-          <Route path="/orders" element={<Orders />} />
-          <Route path="/user" element={<UserDetail />} />
-          <Route path="/category/:id" element={<Category />} />
-          <Route path="/reset-password" element={<ResetPassword />} />
-        </Routes>
-        <Footer />
-      </div>
+      <ShopContextProvider>
+        <ToastContainer />
+        <div className="px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]">
+          <Header />
+          <SidebarMenu />
+          <Routes>
+            <Route element={<PrivateRoute />}>
+              <Route path="/" element={<Home />} />
+            </Route>
+            <Route path="/about" element={<About />} />
+            <Route path="/products" element={<Products />} />
+            <Route path="/product/:id" element={<ProductDetail />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/place-order" element={<PlaceOrder />} />
+            <Route path="/orders" element={<Orders />} />
+            <Route path="/user" element={<UserDetail />} />
+            <Route path="/category/:id" element={<Category />} />
+          </Routes>
+          <Footer />
+        </div>
+      </ShopContextProvider>
     </AuthProvider>
   )
 }

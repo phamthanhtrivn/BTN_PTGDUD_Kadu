@@ -1,15 +1,35 @@
 import { NavLink, Link } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { images } from "../assets/assets";
 import { ShopContext } from "../context/ShopContext";
+import { useAuth } from "../context/AuthContext";
 const Header = () => {
   const {
     setVisibleMenu,
     navigate,
     setShowSearchBar,
     showSearchBar,
-    getCartTotalQuantity,
+    totalQuantity,
+    token,
   } = useContext(ShopContext);
+
+  const { logOut } = useAuth()
+
+  const [showDropdown, setShowDropdown] = useState(false);
+
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setShowDropdown(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   return (
     <div className="sticky top-0 z-50 bg-white flex items-center justify-between mb-10 py-5 font-medium border-b border-gray-400">
       <Link to="/">
@@ -21,30 +41,9 @@ const Header = () => {
           <hr className="w-1/2 border-none h-[1.5px] bg-gray-700 hidden" />
         </NavLink>
         <NavLink to="/products" className="flex flex-col items-center gap-1">
-          <div className="group relative flex flex-col items-center ">
-            <p className="flex gap-2">
-              SẢN PHẨM <span>&#128899;</span>
-            </p>
+          <div className="flex flex-col items-center ">
+            <div className="flex gap-2">SẢN PHẨM</div>
             <hr className="w-1/2 border-none h-[1.5px] bg-gray-700 hidden" />
-            <div className="group-hover:block hidden absolute dropdown-menu top-[15px] left-0 pt-4">
-              <div className="flex flex-col gap-2 w-40 bg-slate-100 text-gray-500 rounded">
-                <p className="cursor-pointer hover:text-white hover:bg-gray-600 py-2 px-6">
-                  Bút viết
-                </p>
-                <p className="cursor-pointer hover:text-white hover:bg-gray-600 py-2 px-6">
-                  Sách vở
-                </p>
-                <p className="cursor-pointer hover:text-white hover:bg-gray-600 py-2 px-6">
-                  Đèn học
-                </p>
-                <p className="cursor-pointer hover:text-white hover:bg-gray-600 py-2 px-6">
-                  Văn phòng phẩm
-                </p>
-                <p className="cursor-pointer hover:text-white hover:bg-gray-600 py-2 px-6">
-                  Giấy in
-                </p>
-              </div>
-            </div>
           </div>
         </NavLink>
         <NavLink to="/about" className="flex flex-col items-center gap-1">
@@ -64,21 +63,33 @@ const Header = () => {
           className="w-5 cursor-pointer"
           onClick={() => setShowSearchBar(!showSearchBar)}
         />
-        {localStorage.getItem("site") != null ? (
-          <img
-            src={images.avatar}
-            alt="profile_avatar"
-            className="w-10 cursor-pointer"
-            onClick={() => navigate("/profile")}
-          />
-        ) : (
+        <div className="relative" ref={dropdownRef}>
           <img
             src={images.profile_icon}
             alt="profile_icon"
             className="w-5 cursor-pointer"
-            onClick={() => navigate("/login")}
+            onClick={() =>
+              token ? setShowDropdown(!showDropdown) : navigate("/login")
+            }
           />
-        )}
+          {token && showDropdown && (
+            <div className="text-base absolute right-0 w-45 bg-slate-100 text-gray-500 shadow-md rounded py-2 mt-2">
+              <p
+                onClick={() => navigate("/user")}
+                className="p-2 cursor-pointer hover:text-black"
+              >
+                Thông tin của tôi
+              </p>
+              <p
+                onClick={() => navigate("/orders")}
+                className="p-2 cursor-pointer hover:text-black"
+              >
+                Các đơn hàng của tôi
+              </p>
+              <p onClick={() => logOut()} className="p-2 cursor-pointer hover:text-black">Đăng xuất</p>
+            </div>
+          )}
+        </div>
         <Link to="/cart" className="relative inline-block">
           <div className="relative">
             <img
@@ -87,7 +98,7 @@ const Header = () => {
               alt="cart_icon"
             />
             <p className="absolute -right-2 -top-1 flex items-center justify-center w-5 h-5 bg-red-500 text-white rounded-full text-[10px] font-bold shadow-md">
-              {getCartTotalQuantity()}
+              {totalQuantity}
             </p>
           </div>
         </Link>

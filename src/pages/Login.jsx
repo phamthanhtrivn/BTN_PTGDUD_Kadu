@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 
 const Login = () => {
-  const { login, authUser, getEmailFromToken } = useAuth();
+  const { login, authUser } = useAuth();
   const [isLogging, setIsLogging] = useState(false);
   const navigate = useNavigate();
   const handleLogin = () => {
@@ -27,7 +27,6 @@ const Login = () => {
       }
       else toast.error("Tài khoản hoặc mật khẩu không đúng");
     }
-    console.log(getEmailFromToken());
   }, [isLogging]);
   const inputEmail = useRef();
   const inputPassword = useRef();

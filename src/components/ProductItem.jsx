@@ -1,8 +1,6 @@
-
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { ShopContext } from "../context/ShopContext";
-import { Heart } from "lucide-react";
 import "../styles/ProductItem.css";
 
 const ProductItem = ({ product }) => {
@@ -17,8 +15,7 @@ const ProductItem = ({ product }) => {
 
   // Tách số từ chuỗi price và discount
   const priceNumber = parseInt(price?.toString().replace(/[^\d]/g, ""), 10) || 0;
-  const discountNumber =
-    parseInt(discount?.toString().replace(/[^\d]/g, ""), 10) || 0;
+  const discountNumber = parseInt(discount?.toString().replace(/[^\d]/g, ""), 10) || 0;
 
   // Tính giá sau khi giảm
   const discountedPrice =
@@ -68,18 +65,14 @@ const ProductItem = ({ product }) => {
         )}
       </div>
 
-      {/* Nút "Thêm vào giỏ hàng" và Nút yêu thích */}
-      <div className="flex items-center w-full mt-3 gap-3">
+      {/* Nút "Thêm vào giỏ hàng" */}
+      <div className="flex items-center w-full mt-3">
         <button
           onClick={() => handleAddToCart(id)}
           className="flex-1 flex items-center gap-2 justify-center border border-[#005E4F] text-[#005E4F] rounded py-2 px-4 hover:text-white hover:bg-[#005E4F] transition-all duration-300"
         >
           <i className="fa-solid fa-cart-shopping"></i>
           <span>Thêm giỏ hàng</span>
-        </button>
-
-        <button className="w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition">
-          <Heart className="w-5 h-5 text-pink-500" />
         </button>
       </div>
     </div>

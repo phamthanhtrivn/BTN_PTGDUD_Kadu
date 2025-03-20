@@ -46,8 +46,8 @@ const Home = () => {
       <Banner />
       <CategorySection />
       <br />
-      <FlashSale products={categorizedProducts.sale} />
-      <h1 className="text-3xl font-bold mb-4 text-center">Sản phẩm</h1>
+      
+      <h1 className="text-4xl font-bold mb-4 text-center">Sản phẩm</h1>
       
       <div className="flex justify-center space-x-6 border-b mb-4">
         <button className={tabClasses("new")} onClick={() => handleTabChange("new")}>Sản phẩm mới</button>

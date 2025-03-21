@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import User from '../models/userModel.js';
-import ResetToken from '../models/resetTokenModel.js';
+import ResetToken from '../models/ResetTokenModel.js';
 import nodemailer from 'nodemailer';
 const JWT_SECRET = process.env.JWT_SECRET;
 

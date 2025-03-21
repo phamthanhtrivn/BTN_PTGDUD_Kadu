@@ -12,6 +12,14 @@ import star_icon from "./star_icon.png"
 import empty_cart from "./empty_cart.png"
 import bigAvatar from "./bigAvatar.png"
 import background from "./background.jpg"
+import facebook_icon from "./facebook.png";
+import instagram_icon from "./instagram.png";
+import tiktok_icon from "./tiktok.png";
+import logo1 from "./logo1.png";
+import logo2 from "./logo2.png";
+import logo3 from "./logo3.png";
+import logo4 from "./logo4.png";
+import logo5 from "./logo5.png";
 export const images = {
   logo,
   search_icon,
@@ -27,6 +35,15 @@ export const images = {
   empty_cart,
   bigAvatar,
   background,
+  empty_cart,
+  facebook_icon,
+  instagram_icon,
+  tiktok_icon,
+  logo1,
+  logo2,
+  logo3,
+  logo4,
+  logo5
 };
 
 export const products = [

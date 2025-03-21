@@ -1,9 +1,8 @@
 import { NavLink, Link } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { images } from "../assets/assets";
 import { ShopContext } from "../context/ShopContext";
 import { useAuth } from "../context/AuthContext";
-import { FaChevronDown } from "react-icons/fa";
 
 const Header = () => {
   const {
@@ -13,10 +12,24 @@ const Header = () => {
     showSearchBar,
     getCartTotalQuantity,
   } = useContext(ShopContext);
-  const { authUser } = useAuth();
+  const { authUser, logOut } = useAuth();
+
+  const [showDropdown, setShowDropdown] = useState(false);
+  const dropdownRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setShowDropdown(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   return (
-    <div className="sticky top-0 z-50 bg-white flex items-center justify-between mb-10 py-6 font-medium border-b border-gray-300 shadow-sm">
+    <div className="sticky top-0 z-50 bg-white flex items-center justify-between py-6 font-medium border-b border-gray-300 shadow-sm w-full px-4 sm:px-8">
       <Link to="/">
         <img src={images.logo} className="w-40" alt="logo" />
       </Link>
@@ -40,32 +53,8 @@ const Header = () => {
             }`
           }
         >
-          <div className="group relative flex flex-col items-center">
-            <p className="flex items-center gap-2">
-              SẢN PHẨM{" "}
-              <FaChevronDown className="text-xs group-hover:rotate-180 transition-transform duration-300" />
-            </p>
-            <hr className="w-1/2 border-none h-[2px] bg-[#005E4F] hidden transition-all duration-300" />
-            <div className="group-hover:block hidden absolute dropdown-menu top-full left-0 mt-2 -ml-8">
-              <div className="flex flex-col gap-1 w-48 bg-white shadow-lg text-gray-700 rounded-xl border border-gray-100 py-4 px-2 transform transition-all duration-200 ease-in-out hover:block">
-                <p className="cursor-pointer hover:text-white hover:bg-[#005E4F] py-2 px-4 rounded-lg transition-colors duration-200">
-                  Bút viết
-                </p>
-                <p className="cursor-pointer hover:text-white hover:bg-[#005E4F] py-2 px-4 rounded-lg transition-colors duration-200">
-                  Sách vở
-                </p>
-                <p className="cursor-pointer hover:text-white hover:bg-[#005E4F] py-2 px-4 rounded-lg transition-colors duration-200">
-                  Đèn học
-                </p>
-                <p className="cursor-pointer hover:text-white hover:bg-[#005E4F] py-2 px-4 rounded-lg transition-colors duration-200">
-                  Văn phòng phẩm
-                </p>
-                <p className="cursor-pointer hover:text-white hover:bg-[#005E4F] py-2 px-4 rounded-lg transition-colors duration-200">
-                  Giấy in
-                </p>
-              </div>
-            </div>
-          </div>
+          <p>SẢN PHẨM</p>
+          <hr className="w-1/2 border-none h-[2px] bg-[#005E4F] hidden transition-all duration-300" />
         </NavLink>
         <NavLink
           to="/about"
@@ -98,21 +87,45 @@ const Header = () => {
           className="w-6 cursor-pointer hover:opacity-80 transition-opacity duration-200"
           onClick={() => setShowSearchBar(!showSearchBar)}
         />
-        {authUser() ? (
-          <img
-            src={images.avatar}
-            alt="profile_avatar"
-            className="w-11 cursor-pointer rounded-full hover:ring-2 hover:ring-[#005E4F] transition-all duration-300"
-            onClick={() => navigate("/profile")}
-          />
-        ) : (
-          <img
-            src={images.profile_icon}
-            alt="profile_icon"
-            className="w-6 cursor-pointer hover:opacity-80 transition-opacity duration-200"
-            onClick={() => navigate("/login")}
-          />
-        )}
+        <div className="relative" ref={dropdownRef}>
+          {authUser() ? (
+            <img
+              src={images.avatar}
+              alt="profile_avatar"
+              className="w-11 cursor-pointer rounded-full hover:ring-2 hover:ring-[#005E4F] transition-all duration-300"
+              onClick={() => setShowDropdown(!showDropdown)}
+            />
+          ) : (
+            <img
+              src={images.profile_icon}
+              alt="profile_icon"
+              className="w-6 cursor-pointer hover:opacity-80 transition-opacity duration-200"
+              onClick={() => navigate("/login")}
+            />
+          )}
+          {authUser() && showDropdown && (
+            <div className="text-base absolute right-0 w-48 bg-slate-100 text-gray-500 shadow-md rounded py-2 mt-2">
+              <p
+                onClick={() => navigate("/user")}
+                className="p-2 cursor-pointer hover:text-black hover:bg-gray-200 transition-colors duration-200"
+              >
+                Thông tin của tôi
+              </p>
+              <p
+                onClick={() => navigate("/orders")}
+                className="p-2 cursor-pointer hover:text-black hover:bg-gray-200 transition-colors duration-200"
+              >
+                Các đơn hàng của tôi
+              </p>
+              <p
+                onClick={() => logOut()}
+                className="p-2 cursor-pointer hover:text-black hover:bg-gray-200 transition-colors duration-200"
+              >
+                Đăng xuất
+              </p>
+            </div>
+          )}
+        </div>
         <Link to="/cart" className="relative inline-block">
           <div className="relative">
             <img

@@ -15,7 +15,7 @@ export const AuthProvider = ({ children }) => {
     setUser(userData);
   };
   const authUser = async () => {
-    // truongnaiduc18@gmail- 123456
+    // truongmaiduc18@gmail.com- 1234
     // admin@gmail -admin
     // user@gmail- user
     try {

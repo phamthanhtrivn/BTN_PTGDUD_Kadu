@@ -119,7 +119,7 @@ const UserDetail = () => {
         {/* Avatar và tên người dùng */}
         <div className="relative flex flex-col items-center">
           <img
-            src={images.bigAvatar}
+            src={images.user}
             alt="User Avatar"
             className="w-32 h-32 rounded-full border-4 border-white shadow-lg"
           />

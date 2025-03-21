@@ -65,7 +65,7 @@ const Header = () => {
         />
         <div className="relative" ref={dropdownRef}>
           <img
-            src={token ? images.bigAvatar : images.profile_icon}
+            src={token ? images.user : images.profile_icon}
             alt="profile_icon"
             className={token ? "w-10 cursor-pointer" : "w-5 cursor-pointer"}
             onClick={() =>

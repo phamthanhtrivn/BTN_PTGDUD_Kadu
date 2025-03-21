@@ -20,6 +20,7 @@ import logo2 from "./logo2.png";
 import logo3 from "./logo3.png";
 import logo4 from "./logo4.png";
 import logo5 from "./logo5.png";
+import user from "./user.png";
 export const images = {
   logo,
   search_icon,
@@ -35,7 +36,6 @@ export const images = {
   empty_cart,
   bigAvatar,
   background,
-  empty_cart,
   facebook_icon,
   instagram_icon,
   tiktok_icon,
@@ -43,7 +43,8 @@ export const images = {
   logo2,
   logo3,
   logo4,
-  logo5
+  logo5,
+  user
 };
 
 export const products = [

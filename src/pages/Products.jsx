@@ -90,7 +90,7 @@ const Products = () => {
           </p>
           {/* Category Filter */}
           <div
-            className={`border border-gray-300 pl-5 py-3 my-5 ${showFilter ? "" : "hidden"
+            className={`border border-gray-300 pl-5 py-3 my-5 rounded ${showFilter ? "" : "hidden"
               } sm:block`}
           >
             <p className="mb-3 text-sm font-medium">LOẠI SẢN PHẨM</p>
@@ -149,7 +149,7 @@ const Products = () => {
             <div className="">
               <select
                 onChange={(e) => setSortType(e.target.value)}
-                className="py-1.5 px-3 border "
+                className="py-1.5 px-3 border rounded"
               >
                 <option value="mac-dinh">Sắp xếp mặc định</option>
                 <option value="thap-den-cao">Giá từ thấp đến cao</option>
@@ -173,7 +173,7 @@ const Products = () => {
               <button
                 key={index}
                 onClick={() => handlePageChange(index + 1)}
-                className={`px-3 py-1 border border-[#005E4F] ${currentPage === index + 1 ? "bg-[#005E4F] text-white" : ""
+                className={`px-3 py-1 border border-[#005E4F] rounded ${currentPage === index + 1 ? "bg-[#005E4F] text-white" : ""
                   }`}
               >
                 {index + 1}

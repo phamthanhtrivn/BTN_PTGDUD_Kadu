@@ -1,0 +1,97 @@
+.reviews-container {
+  padding: 3rem 1rem;
+  position: relative;
+}
+
+.reviews-container h2 {
+  margin-bottom: 0.5rem;
+}
+
+.sub-title {
+  font-size: 1.1rem;
+  color: #666;
+}
+
+.review-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  height: 100%;
+}
+
+.review-card:hover {
+  transform: translateY(-5px);
+}
+
+.avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 1rem;
+}
+
+.review-card h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.role {
+  font-size: 0.9rem;
+  color: #888;
+  margin-top: 0.25rem;
+}
+
+.stars {
+  font-size: 1.2rem;
+  color: #facc15;
+  margin-top: 0.5rem;
+}
+
+.comment {
+  font-size: 0.95rem;
+  color: #555;
+  margin-top: 1rem;
+  font-style: italic;
+}
+
+/* Tùy chỉnh Swiper */
+.swiper {
+  padding-bottom: 3rem;
+}
+
+.swiper-pagination-bullet {
+  background: #ccc;
+  opacity: 0.5;
+}
+
+.swiper-pagination-bullet-active {
+  background: #6b46c1; /* Màu tím đồng bộ với giao diện */
+  opacity: 1;
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+  color: #666;
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.swiper-button-prev:hover,
+.swiper-button-next:hover {
+  color: #6b46c1;
+  background: rgba(255, 255, 255, 1);
+}
+
+.swiper-button-prev::after,
+.swiper-button-next::after {
+  font-size: 1.2rem;
+}
+

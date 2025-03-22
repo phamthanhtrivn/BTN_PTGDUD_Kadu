@@ -35,13 +35,6 @@ const Login = () => {
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
         <h2 className="text-2xl font-bold text-center mb-6">ĐĂNG NHẬP</h2>
 
-        {/* Hoặc */}
-        <div className="flex items-center my-4">
-          <div className="flex-grow border-t border-gray-300"></div>
-          <span className="px-3 text-gray-500">Hoặc tài khoản</span>
-          <div className="flex-grow border-t border-gray-300"></div>
-        </div>
-
         {/* Form nhập tài khoản */}
         <input
           ref={inputEmail}

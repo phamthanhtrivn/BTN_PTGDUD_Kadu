@@ -20,7 +20,7 @@ const RelatedProduct = ({ category }) => {
         {productsCopy.slice(0, 4).map((p, index) => (
           <ProductItem
             key={index}
-            id={p._id}
+            id={p.id}
             name={p.name}
             price={p.price}
             image={p.image}

@@ -4,6 +4,8 @@ import { toast } from "react-toastify";
 import { FaSpinner } from "react-icons/fa";
 import { images } from "../assets/assets";
 import { useAuth } from "../context/AuthContext";
+import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const UserDetail = () => {
   const { token } = useAuth();
   const [user, setUser] = useState({
@@ -43,6 +45,9 @@ const UserDetail = () => {
   const handleSave = async () => {
 
     if (handleCheckInput()) {
+      tempUser.address.city = selectedTinh;
+      tempUser.address.district = selectedHuyen;
+      tempUser.address.ward = selectedXa;
       setEditMode(false);
       setIsLoading(true);
     }
@@ -60,7 +65,7 @@ const UserDetail = () => {
     }
   };
   const handleCheckInput = () => {
-    if (tempUser.address.city === "" || tempUser.address.district === "" || tempUser.address.ward === "" || tempUser.address.street === "") {
+    if (tempUser.address.city === "Chọn tỉnh" || tempUser.address.district === "Chọn huyện" || tempUser.address.ward === "Chọn xã" || tempUser.address.street === "") {
       toast.error("Vui lòng điền đầy đủ thông tin");
       return false;
     }
@@ -106,6 +111,65 @@ const UserDetail = () => {
   useEffect(() => {
     loadUser();
   }, [refreshTrigger]);
+  const [tinh, setTinh] = useState([{
+    name: "Hà Nội",
+    code: "011"
+  }]);
+  useEffect(() => {
+    axios.get("https://vn-public-apis.fpo.vn/provinces/getAll?limit=-1")
+      .then((response) => {
+        const provinceData = response.data?.data?.data || [];
+        const filtered = provinceData.map((item) => ({
+          name: item.name,
+          code: item.code
+        }));
+        setTinh(filtered);
+      }).catch((error) => {
+        console.error("Lỗi khi gọi API:", error);
+      });
+  }, []);
+  const [isTinhOpen, setIsTinhOpen] = useState(false);
+  const [selectedTinh, setSelectedTinh] = useState(!tempUser.address.city ? "Chọn tỉnh" : tempUser.address.city);
+  const [huyen, setHuyen] = useState([{
+    name: "Hà Đông",
+    code: "011"
+  }])
+  const [selectedHuyen, setSelectedHuyen] = useState(!tempUser.address.district ? "Chọn huyện" : tempUser.address.district)
+  const [isHuyenOpen, setIsHuyenOpen] = useState(false);
+  const handleLoadHuyen = (codeTinh) => {
+    axios.get(`https://vn-public-apis.fpo.vn/districts/getByProvince?provinceCode=${codeTinh}&limit=-1`)
+      .then((response) => {
+        const huyenData = response.data?.data?.data || [];
+        const filtered = huyenData.map((item) => ({
+          name: item.name,
+          code: item.code
+        }));
+        setHuyen(filtered);
+      })
+      .catch((error) => {
+        console.error("Lỗi khi gọi API:", error);
+      });
+  };
+  const [xa, setXa] = useState([{
+    name: "Hà Đông",
+    code: "011"
+  }])
+  const [selectedXa, setSelectedXa] = useState(!tempUser.address.ward ? "Chọn xã" : tempUser.address.ward)
+  const [isXaOpen, setIsXaOpen] = useState(false);
+  const handleLoadXa = (codeHuyen) => {
+    axios.get(`https://vn-public-apis.fpo.vn/wards/getByDistrict?districtCode=${codeHuyen}&limit=-1`)
+      .then((response) => {
+        const xaData = response.data?.data?.data || [];
+        const filtered = xaData.map((item) => ({
+          name: item.name,
+          code: item.code
+        }));
+        setXa(filtered);
+      })
+      .catch((error) => {
+        console.error("Lỗi khi gọi API:", error);
+      });
+  };
   return (
     <div className="max-w-2xl mx-auto p-6 bg-white text-black shadow-lg rounded-lg border-4 border-[#00453A]">
       <div
@@ -131,9 +195,119 @@ const UserDetail = () => {
       <div className="mt-6 space-y-4">
         {editMode ? (
           <>
-            <InfoInput label="Tỉnh/Thành phố" name="city" value={tempUser.address.city} onChange={handleChange} />
-            <InfoInput label="Quận/Huyện" name="district" value={tempUser.address.district} onChange={handleChange} />
-            <InfoInput label="Xã/Phường" name="ward" value={tempUser.address.ward} onChange={handleChange} />
+
+            <div className="flex items-center justify-between my-5">
+              <label className="text-black font-medium">Tỉnh/Thành phố</label>
+              <div className="relative inline-block">
+                <button
+                  onClick={() => {
+                    setIsTinhOpen(!isTinhOpen);
+                    setIsHuyenOpen(false);
+                    setIsXaOpen(false);
+                  }}
+                  className="min-w-[160px] p-2 border border-gray-300 rounded text-black text-end flex justify-between items-center"
+                >
+                  {selectedTinh}
+                  <FontAwesomeIcon className="ms-2" icon={faCaretDown} />
+                </button>
+                {/* Dropdown */}
+                {isTinhOpen && (
+                  <div className="absolute left-0 top-full mt-1 w-[160px] rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10">
+                    <ul className="py-1">
+                      {tinh.map((option, idx) => (
+                        <li
+                          key={idx}
+                          onClick={() => {
+                            setSelectedTinh(option.name);
+                            handleLoadHuyen(option.code);
+                            setIsTinhOpen(false);
+                          }}
+                          className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
+                        >
+                          {option.name}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            </div>
+            <div className="flex items-center justify-between my-5">
+              <label className="text-black font-medium">Quận/Huyện</label>
+              <div className="relative inline-block">
+                <button
+                  onClick={() => {
+                    setIsHuyenOpen(!isHuyenOpen);
+                    setIsTinhOpen(false);
+                    setIsXaOpen(false);
+                  }}
+                  className="min-w-[160px] p-2 border border-gray-300 rounded text-black text-end flex justify-between items-center"
+                >
+                  {selectedHuyen}
+                  <FontAwesomeIcon className="ms-2" icon={faCaretDown} />
+                </button>
+
+                {/* Dropdown */}
+                {isHuyenOpen && (
+                  <div className="absolute left-0 top-full mt-1 w-full rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10">
+                    <ul className="py-1">
+                      {huyen.map((option, idx) => (
+                        <li
+                          key={idx}
+                          onClick={() => {
+                            setSelectedHuyen(option.name);
+                            handleLoadXa(option.code);
+                            setIsHuyenOpen(false);
+                          }}
+                          className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
+                        >
+                          {option.name}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div className="flex items-center justify-between my-5">
+              <label className="text-black font-medium">Xã/Phường</label>
+              <div className="relative inline-block">
+                <button
+                  onClick={() => {
+                    setIsXaOpen(!isXaOpen);
+                    setIsTinhOpen(false);
+                    setIsHuyenOpen(false);
+                  }}
+                  className="min-w-[160px] p-2 border border-gray-300 rounded text-black text-end flex justify-between items-center"
+                >
+                  {selectedXa}
+                  <FontAwesomeIcon className="ms-2" icon={faCaretDown} />
+                </button>
+
+
+                {/* Dropdown */}
+                {isXaOpen && (
+                  <div className="absolute left-0 top-full mt-1 w-full rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-10">
+                    <ul className="py-1">
+                      {xa.map((option, idx) => (
+                        <li
+                          key={idx}
+                          onClick={() => {
+                            setSelectedXa(option.name);
+                            setIsXaOpen(false);
+                          }}
+                          className="px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer"
+                        >
+                          {option.name}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            </div>
+
             <InfoInput label="Địa chỉ" name="street" value={tempUser.address.street} onChange={handleChange} />
           </>
         ) : (

@@ -10,10 +10,11 @@ const Header = () => {
     navigate,
     setShowSearchBar,
     showSearchBar,
-    getCartTotalQuantity,
+    totalQuantity,
+    token,
   } = useContext(ShopContext);
-  const { authUser, logOut } = useAuth();
 
+  const { logOut } = useAuth();
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -28,124 +29,99 @@ const Header = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  return (
-    <div className="sticky top-0 z-50 bg-white flex items-center justify-between py-6 font-medium border-b border-gray-300 shadow-sm w-full px-4 sm:px-8">
-      <Link to="/">
-        <img src={images.logo} className="w-40" alt="logo" />
-      </Link>
-      <ul className="hidden sm:flex gap-8 text-base text-gray-800">
-        <NavLink
-          to="/"
-          className={({ isActive }) =>
-            `flex flex-col items-center gap-1 hover:text-[#005E4F] transition-all duration-300 ease-in-out ${
-              isActive ? "text-[#005E4F] active" : ""
-            }`
-          }
-        >
-          <p>TRANG CHỦ</p>
-          <hr className="w-1/2 border-none h-[2px] bg-[#005E4F] hidden transition-all duration-300" />
-        </NavLink>
-        <NavLink
-          to="/products"
-          className={({ isActive }) =>
-            `flex flex-col items-center gap-1 hover:text-[#005E4F] transition-all duration-300 ease-in-out ${
-              isActive ? "text-[#005E4F] active" : ""
-            }`
-          }
-        >
-          <p>SẢN PHẨM</p>
-          <hr className="w-1/2 border-none h-[2px] bg-[#005E4F] hidden transition-all duration-300" />
-        </NavLink>
-        <NavLink
-          to="/about"
-          className={({ isActive }) =>
-            `flex flex-col items-center gap-1 hover:text-[#005E4F] transition-all duration-300 ease-in-out ${
-              isActive ? "text-[#005E4F] active" : ""
-            }`
-          }
-        >
-          <p>VỀ CHÚNG TÔI</p>
-          <hr className="w-1/2 border-none h-[2px] bg-[#005E4F] hidden transition-all duration-300" />
-        </NavLink>
-        <NavLink
-          to="/contact"
-          className={({ isActive }) =>
-            `flex flex-col items-center gap-1 hover:text-[#005E4F] transition-all duration-300 ease-in-out ${
-              isActive ? "text-[#005E4F] active" : ""
-            }`
-          }
-        >
-          <p>LIÊN HỆ</p>
-          <hr className="w-1/2 border-none h-[2px] bg-[#005E4F] hidden transition-all duration-300" />
-        </NavLink>
-      </ul>
+  const navLinkClass = ({ isActive }) =>
+    `text-[15px] ${
+      isActive ? "text-[#005E4F]" : "text-black"
+    } hover:text-[#005E4F] hover:font-semibold transition-all duration-200`;
 
-      <div className="flex items-center gap-7">
+  return (
+    <header className="sticky top-0 z-50 bg-white shadow-md py-4 px-6 flex items-center justify-between">
+      {/* Logo */}
+      <Link to="/">
+        <img src={images.logo} alt="Logo" className="w-36" />
+      </Link>
+
+      {/* Navigation */}
+      <nav className="hidden sm:flex gap-8 text-base uppercase font-semibold text-black">
+        <NavLink to="/" className={navLinkClass}>
+          Trang chủ
+        </NavLink>
+        <NavLink to="/products" className={navLinkClass}>
+          Sản phẩm
+        </NavLink>
+        <NavLink to="/about" className={navLinkClass}>
+          Về chúng tôi
+        </NavLink>
+        <NavLink to="/contact" className={navLinkClass}>
+          Liên hệ
+        </NavLink>
+      </nav>
+
+      {/* Icons + Dropdown */}
+      <div className="flex items-center gap-5">
+        {/* Search Icon */}
         <img
           src={images.search_icon}
-          alt="search_icon"
-          className="w-6 cursor-pointer hover:opacity-80 transition-opacity duration-200"
+          alt="Tìm kiếm"
+          className="w-5 cursor-pointer"
           onClick={() => setShowSearchBar(!showSearchBar)}
         />
+
+        {/* User/Profile Dropdown */}
         <div className="relative" ref={dropdownRef}>
-          {authUser() ? (
-            <img
-              src={images.avatar}
-              alt="profile_avatar"
-              className="w-11 cursor-pointer rounded-full hover:ring-2 hover:ring-[#005E4F] transition-all duration-300"
-              onClick={() => setShowDropdown(!showDropdown)}
-            />
-          ) : (
-            <img
-              src={images.profile_icon}
-              alt="profile_icon"
-              className="w-6 cursor-pointer hover:opacity-80 transition-opacity duration-200"
-              onClick={() => navigate("/login")}
-            />
-          )}
-          {authUser() && showDropdown && (
-            <div className="text-base absolute right-0 w-48 bg-slate-100 text-gray-500 shadow-md rounded py-2 mt-2">
+          <img
+            src={token ? images.user : images.profile_icon}
+            alt="profile"
+            className={`cursor-pointer ${token ? "w-9" : "w-6"}`}
+            onClick={() =>
+              token ? setShowDropdown(!showDropdown) : navigate("/login")
+            }
+          />
+          {token && showDropdown && (
+            <div className="absolute right-0 w-48 bg-white border rounded shadow-md mt-2 text-base">
               <p
                 onClick={() => navigate("/user")}
-                className="p-2 cursor-pointer hover:text-black hover:bg-gray-200 transition-colors duration-200"
+                className="p-3 hover:bg-gray-100 cursor-pointer"
               >
                 Thông tin của tôi
               </p>
               <p
                 onClick={() => navigate("/orders")}
-                className="p-2 cursor-pointer hover:text-black hover:bg-gray-200 transition-colors duration-200"
+                className="p-3 hover:bg-gray-100 cursor-pointer"
               >
-                Các đơn hàng của tôi
+                Đơn hàng
               </p>
               <p
-                onClick={() => logOut()}
-                className="p-2 cursor-pointer hover:text-black hover:bg-gray-200 transition-colors duration-200"
+                onClick={logOut}
+                className="p-3 hover:bg-gray-100 cursor-pointer text-red-500"
               >
                 Đăng xuất
               </p>
             </div>
           )}
         </div>
-        <Link to="/cart" className="relative inline-block">
-          <div className="relative">
-            <img
-              src={images.cart_icon}
-              className="w-7 h-7 transition-transform duration-300 ease-in-out hover:scale-110"
-              alt="cart_icon"
-            />
-            <p className="absolute -right-2 -top-2 flex items-center justify-center w-5 h-5 bg-[#005E4F] text-white rounded-full text-xs font-bold shadow-md">
-              {getCartTotalQuantity()}
-            </p>
-          </div>
+
+        {/* Cart Icon */}
+        <Link to="/cart" className="relative">
+          <img
+            src={images.cart_icon}
+            alt="Giỏ hàng"
+            className="w-6 hover:scale-110 transition-transform"
+          />
+          <span className="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] w-5 h-5 flex items-center justify-center rounded-full">
+            {totalQuantity}
+          </span>
         </Link>
+
+        {/* Mobile Menu Icon */}
         <img
           onClick={() => setVisibleMenu(true)}
           src={images.menu_icon}
-          className="w-6 cursor-pointer sm:hidden hover:opacity-80 transition-opacity duration-200"
-          alt="menu_icon"
+          className="w-6 sm:hidden cursor-pointer"
+          alt="menu"
         />
       </div>
-    </div>
+    </header>
   );
 };
 

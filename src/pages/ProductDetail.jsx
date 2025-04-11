@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { ShopContext } from "../context/ShopContext";
 import { images } from "../assets/assets";
 import RelatedProduct from "../components/RelatedProduct";
+import { toast } from "react-toastify";
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -11,7 +12,7 @@ const ProductDetail = () => {
     useContext(ShopContext);
   const [product, setProduct] = useState({});
 
-  const [quantity, setQuantity] = useState(0);
+  const [quantity, setQuantity] = useState(1);
 
   const dataProduct = () => {
     products.map((product) => {
@@ -59,7 +60,11 @@ const ProductDetail = () => {
             />
             <button
               onClick={() => {
-                handleAddToCart(id, Number(quantity));
+                if (!quantity || isNaN(quantity)) {
+                  toast.error("Vui lòng chọn số lượng sản phẩm");
+                  return;
+                }
+                handleAddToCart(Number(id), Number(quantity));
               }}
               className="flex items-center gap-3 justify-center mt-3 border border-[#005E4F] hover:text-[#005E4F] hover:bg-white rounded py-2 px-4 text-white bg-[#005E4F] transition-all duration-300"
             >
@@ -97,14 +102,14 @@ const ProductDetail = () => {
                   </td>
                   <td className="px-4 py-3 text-gray-600">{product.origin}</td>
                 </tr>
-                {/* {product.attributes.map((item, index) => (
+                {product.attributes?.map((item, index) => (
                   <tr key={index} className="odd:bg-gray-50 even:bg-gray-100">
                     <td className="px-4 py-3 font-medium text-gray-700">
                       {item.k}
                     </td>
                     <td className="px-4 py-3 text-gray-600">{item.v}</td>
                   </tr>
-                ))} */}
+                ))}
                 <tr className="odd:bg-gray-50 even:bg-gray-100">
                   <td className="px-4 py-3 font-medium text-gray-700">
                     Khuyến cáo

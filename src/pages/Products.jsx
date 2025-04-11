@@ -10,10 +10,8 @@ const Products = () => {
   const [showFilter, setShowFilter] = useState(false);
   const [category, setCategory] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [filterProducts, setFilterProducts] = useState([]);
+  const [filterProducts, setFilterProducts] = useState(products);
   const [sortType, setSortType] = useState("");
-
-  console.log("Products from ShopContext:", products); // Kiểm tra dữ liệu products
 
   const productPerPage = 8;
   const indexOfLastProduct = currentPage * productPerPage;
@@ -65,24 +63,13 @@ const Products = () => {
         break;
     }
 
-    console.log("Filtered products:", filteredP); // Kiểm tra dữ liệu sau khi lọc
     setFilterProducts(filteredP);
     setCurrentPage(1);
   };
 
   useEffect(() => {
-    if (products && products.length > 0) {
-      applyFilters();
-    } else {
-      setFilterProducts([]); // Đảm bảo filterProducts là mảng rỗng nếu không có dữ liệu
-    }
+    applyFilters();
   }, [category, products, sortType, search]);
-
-  if (!products || products.length === 0) {
-    return <div>Đang tải sản phẩm...</div>;
-  }
-
-  console.log("Current products to display:", currentProducts); // Kiểm tra currentProducts
 
   return (
     <>
@@ -95,18 +82,16 @@ const Products = () => {
           >
             FILTERS
             <img
-              className={`h-4 sm:hidden transition-all duration-300 ${
-                showFilter ? "rotate-90" : ""
-              }`}
+              className={`h-4 sm:hidden transition-all duration-300 ${showFilter ? "rotate-90" : ""
+                }`}
               src={images.dropdown_icon}
               alt="dropdown_icon"
             />
           </p>
           {/* Category Filter */}
           <div
-            className={`border border-gray-300 pl-5 py-3 my-5 ${
-              showFilter ? "" : "hidden"
-            } sm:block`}
+            className={`border border-gray-300 pl-5 py-3 my-5 rounded ${showFilter ? "" : "hidden"
+              } sm:block`}
           >
             <p className="mb-3 text-sm font-medium">LOẠI SẢN PHẨM</p>
             <div className="flex flex-col gap-2 text-sm font-light text-gray-700">
@@ -164,7 +149,7 @@ const Products = () => {
             <div className="">
               <select
                 onChange={(e) => setSortType(e.target.value)}
-                className="py-1.5 px-3 border "
+                className="py-1.5 px-3 border rounded"
               >
                 <option value="mac-dinh">Sắp xếp mặc định</option>
                 <option value="thap-den-cao">Giá từ thấp đến cao</option>
@@ -173,22 +158,23 @@ const Products = () => {
             </div>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-5">
-            {currentProducts.length > 0 ? (
-              currentProducts.map((item, index) => (
-                <ProductItem key={item.id} product={item} />
-              ))
-            ) : (
-              <div>Không có sản phẩm nào để hiển thị</div>
-            )}
+            {currentProducts.map((item, index) => (
+              <ProductItem
+                key={index}
+                id={item.id}
+                name={item.name}
+                price={item.price}
+                image={item.image}
+              />
+            ))}
           </div>
           <div className="flex justify-center gap-4 mt-8">
             {Array.from({ length: totalPage }, (_, index) => (
               <button
                 key={index}
                 onClick={() => handlePageChange(index + 1)}
-                className={`px-3 py-1 border border-[#005E4F] ${
-                  currentPage === index + 1 ? "bg-[#005E4F] text-white" : ""
-                }`}
+                className={`px-3 py-1 border border-[#005E4F] rounded ${currentPage === index + 1 ? "bg-[#005E4F] text-white" : ""
+                  }`}
               >
                 {index + 1}
               </button>

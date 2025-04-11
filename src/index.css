@@ -8,3 +8,9 @@
 a.active hr {
   display: block;
 }
+.chatbot-icon {
+  position: fixed; /* hoặc absolute nếu bạn muốn nó phụ thuộc vào container */
+  bottom: 20px;    /* khoảng cách từ dưới lên */
+  right: 20px;     /* khoảng cách từ phải sang */
+  z-index: 9999;   /* đảm bảo nằm trên các phần tử khác */
+}

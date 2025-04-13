@@ -1,25 +1,30 @@
 import { useState, useEffect, useRef } from "react";
 
+// hiển thị nội dung ở page Home
 const reasons = [
   {
     icon: "https://cdn-icons-png.flaticon.com/128/1086/1086525.png", // Icon hộp văn phòng phẩm
     title: "Sản phẩm đa dạng, chất lượng cao",
-    description: "Cung cấp đầy đủ các loại văn phòng phẩm từ bút, giấy, đến dụng cụ học tập, đảm bảo chất lượng từ các thương hiệu uy tín.",
+    description:
+      "Cung cấp đầy đủ các loại văn phòng phẩm từ bút, giấy, đến dụng cụ học tập, đảm bảo chất lượng từ các thương hiệu uy tín.",
   },
   {
     icon: "https://cdn-icons-png.flaticon.com/128/3095/3095222.png", // Icon xe giao hàng
     title: "Giao hàng nhanh chóng, tiện lợi",
-    description: "Hỗ trợ giao hàng toàn quốc, miễn phí vận chuyển cho đơn hàng trên 1.000.000 VNĐ, đảm bảo đúng hẹn.",
+    description:
+      "Hỗ trợ giao hàng toàn quốc, miễn phí vận chuyển cho đơn hàng trên 1.000.000 VNĐ, đảm bảo đúng hẹn.",
   },
   {
     icon: "https://cdn-icons-png.flaticon.com/128/9357/9357070.png", // Icon phiếu giảm giá
     title: "Giá cả cạnh tranh, nhiều ưu đãi",
-    description: "Cam kết giá tốt nhất, thường xuyên có chương trình giảm giá, tặng voucher cho khách hàng thân thiết.",
+    description:
+      "Cam kết giá tốt nhất, thường xuyên có chương trình giảm giá, tặng voucher cho khách hàng thân thiết.",
   },
   {
     icon: "https://cdn-icons-png.flaticon.com/128/1087/1087085.png", // Icon tai nghe hỗ trợ
     title: "Hỗ trợ tận tâm 24/7",
-    description: "Đội ngũ tư vấn luôn sẵn sàng hỗ trợ bạn mọi lúc, giải đáp mọi thắc mắc về sản phẩm và dịch vụ.",
+    description:
+      "Đội ngũ tư vấn luôn sẵn sàng hỗ trợ bạn mọi lúc, giải đáp mọi thắc mắc về sản phẩm và dịch vụ.",
   },
 ];
 

@@ -33,7 +33,6 @@ const Register = () => {
       } else {
         toast.error(data.message); // Thông báo lỗi từ server
       }
-
     } catch (error) {
       console.error("Lỗi khi đăng ký:", error);
       toast.error("Có lỗi xảy ra, vui lòng thử lại sau.");
@@ -42,33 +41,42 @@ const Register = () => {
   const checkValidInput = () => {
     let returnVal = true;
     const lengthRegex = new RegExp("^.{4,}$");
-    if (inputName.current.value === "" ||
+    if (
+      inputName.current.value === "" ||
       inputPassword.current.value === "" ||
       inputConfirmPassword.current.value === "" ||
       inputEmail.current.value === "" ||
-      inputPhone.current.value === "") {
+      inputPhone.current.value === ""
+    ) {
       toast.error("Vui lòng điền đầy đủ thông tin");
       returnVal = false;
-    }
-    else if (inputPassword.current.value !== inputConfirmPassword.current.value) {
+    } else if (
+      inputPassword.current.value !== inputConfirmPassword.current.value
+    ) {
       toast.error("Mật khẩu không khớp");
       returnVal = false;
-    }
-    else if (!lengthRegex.test(inputPassword.current.value) || !lengthRegex.test(inputName.current.value)) {
+    } else if (
+      !lengthRegex.test(inputPassword.current.value) ||
+      !lengthRegex.test(inputName.current.value)
+    ) {
       toast.error("Mật khẩu và UserName phải có ít nhất 4 ký tự");
       returnVal = false;
-    }
-    else if (inputPhone.current.value.length !== 10 || new RegExp("^[0-9]{10}$").test(inputPhone.current.value) === false) {
+    } else if (
+      inputPhone.current.value.length !== 10 ||
+      new RegExp("^[0-9]{10}$").test(inputPhone.current.value) === false
+    ) {
       toast.error("Số điện thoại phải có 10 số");
       returnVal = false;
-    }
-    else if (new RegExp("^[a-zA-Z0-9._%+-]+@gmail\\.com$").test(inputEmail.current.value) === false) {
+    } else if (
+      new RegExp("^[a-zA-Z0-9._%+-]+@gmail\\.com$").test(
+        inputEmail.current.value
+      ) === false
+    ) {
       toast.error("Email phải có dạng @gmail.com");
       returnVal = false;
     }
     return returnVal;
-
-  }
+  };
   const inputName = useRef();
   const inputPassword = useRef();
   const inputConfirmPassword = useRef();
@@ -130,4 +138,4 @@ const Register = () => {
   );
 };
 export default Register;
-
+//

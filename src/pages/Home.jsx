@@ -24,6 +24,7 @@ const Home = () => {
     });
   }, []);
 
+  //đoạn này không sử dụng nữa
   // const categorizedProducts = {
   //   new: products.filter((p) => p.category === "new"),
   //   featured: products.filter((p) => p.category === "featured"),
@@ -65,7 +66,6 @@ const Home = () => {
       <br />
       <NewsCarousel />
       <br />
-      <AIChatBox />
     </div>
   );
 };

@@ -11,8 +11,11 @@ const ForgotPassword = () => {
   const handleForgotPassword = async () => {
     setIsLoading(true);
     try {
-      const res = await axios.post("http://localhost:3001/auth/forgot-password", { email: inputEmail.current.value });
-      toast.success(`✅ ${res.data.message}`);
+      const res = await axios.post(
+        "http://localhost:3001/auth/forgot-password",
+        { email: inputEmail.current.value }
+      );
+      toast.success(`${res.data.message}`);
     } catch (err) {
       // Lấy message từ response của server
       const errorMessage = err.response?.data?.message || "❌ Đã xảy ra lỗi!";
@@ -59,13 +62,19 @@ const ForgotPassword = () => {
 
         {/* Nút xác nhận */}
         <div className="flex gap-4">
-          <Link to="/login" className="text-center w-1/2 hover:bg-green-800 hover:text-white py-2 rounded-md border border-green-800 text-green-800 transition duration-300">
+          <Link
+            to="/login"
+            className="text-center w-1/2 hover:bg-green-800 hover:text-white py-2 rounded-md border border-green-800 text-green-800 transition duration-300"
+          >
             Quay lại
           </Link>
-          <button onClick={handleForgotPassword} disabled={isLoading} className="w-1/2 flex justify-center items-center bg-green-800 text-white py-2 rounded-md hover:bg-green-700 transition">
+          <button
+            onClick={handleForgotPassword}
+            disabled={isLoading}
+            className="w-1/2 flex justify-center items-center bg-green-800 text-white py-2 rounded-md hover:bg-green-700 transition"
+          >
             {isLoading ? <FaSpinner className="animate-spin" /> : " Xác nhận"}
           </button>
-
         </div>
       </div>
     </div>
@@ -81,7 +90,6 @@ const ResetPassword = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const handleResetPassword = async () => {
-
     if (!token) {
       toast.error("❌ Token không hợp lệ!");
       return;
@@ -93,8 +101,11 @@ const ResetPassword = () => {
     }
     setIsLoading(true); // 🔄 Bắt đầu loading
     try {
-      const res = await axios.post("http://localhost:3001/auth/reset-password", { token, newPassword });
-      toast.success(`✅ ${res.data.message}`);
+      const res = await axios.post(
+        "http://localhost:3001/auth/reset-password",
+        { token, newPassword }
+      );
+      toast.success(`${res.data.message}`);
     } catch (err) {
       // Lấy message từ response của server
       const errorMessage = err.response?.data?.message || "❌ Đã xảy ra lỗi!";
@@ -107,7 +118,9 @@ const ResetPassword = () => {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="bg-white p-6 rounded-lg shadow-lg w-96 flex flex-col gap-4">
-        <h2 className="text-2xl font-semibold text-center">🔒 Đặt lại mật khẩu</h2>
+        <h2 className="text-2xl font-semibold text-center">
+          🔒 Đặt lại mật khẩu
+        </h2>
 
         <label className="text-sm font-medium">Mật khẩu mới</label>
         <input
@@ -133,7 +146,11 @@ const ResetPassword = () => {
           disabled={isLoading}
           className="text-white py-2 rounded-lg flex justify-center items-center gap-2 hover:bg-green-700 disabled:bg-gray-400"
         >
-          {isLoading ? <FaSpinner className="animate-spin" /> : "Đặt lại mật khẩu"}
+          {isLoading ? (
+            <FaSpinner className="animate-spin" />
+          ) : (
+            "Đặt lại mật khẩu"
+          )}
         </button>
       </div>
     </div>
@@ -141,4 +158,4 @@ const ResetPassword = () => {
 };
 export { ResetPassword };
 export default ForgotPassword;
-
+//

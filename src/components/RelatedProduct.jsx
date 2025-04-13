@@ -10,7 +10,7 @@ const RelatedProduct = ({ category }) => {
   productsCopy = productsCopy.filter(
     (product) => product.category === category
   );
-  
+
   return (
     <div className="my-10">
       <div className="text-center text-3xl py-2">
@@ -30,5 +30,5 @@ const RelatedProduct = ({ category }) => {
     </div>
   );
 };
-
 export default RelatedProduct;
+//

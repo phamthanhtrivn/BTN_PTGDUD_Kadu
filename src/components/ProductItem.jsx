@@ -15,7 +15,9 @@ const ProductItem = ({ id, name, price, image }) => {
         <Link to={`/product/${id}`}>{name}</Link>
       </p>
       <p className="text-sm font-medium mt-1">
-        <Link to={`/product/${id}`}>{formatMoney(price)} {currency}</Link>
+        <Link to={`/product/${id}`}>
+          {formatMoney(price)} {currency}
+        </Link>
       </p>
       <button
         onClick={() => {
@@ -29,5 +31,5 @@ const ProductItem = ({ id, name, price, image }) => {
     </div>
   );
 };
-
 export default ProductItem;
+//

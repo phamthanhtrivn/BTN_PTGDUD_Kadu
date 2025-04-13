@@ -5,7 +5,6 @@ import ResetToken from '../models/ResetTokenModel.js';
 import nodemailer from 'nodemailer';
 const JWT_SECRET = process.env.JWT_SECRET;
 
-
 export const register = async (req, res) => {
     const { name, password, email, phone } = req.body;
 
@@ -54,15 +53,15 @@ export const login = async (req, res) => {
         }
 // cũ
         // const token = jwt.sign({ email }, JWT_SECRET, { expiresIn: '1h' });
-        // mới dùng user_id
-        const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: '1h' });
+        // mới dùng user_id lấy cả được email
+        const token = jwt.sign({ id: user._id, email: user.email }, JWT_SECRET, { expiresIn: '1h' });
+        
 
 // cũ
         // res.status(200).json({
         //     user: { email },
         //     token,
         // });
-        // mới sửa_chan
         res.status(200).json({
             user: {
               id: user._id,
@@ -77,24 +76,6 @@ export const login = async (req, res) => {
     }
 };
 
-// export const verifyToken = (req, res) => {
-//     const authHeader = req.headers['authorization'];
-//     const token = authHeader && authHeader.split(' ')[1];
-
-//     if (!token) {
-//         return res.status(401).json({ message: "Không có token!" });
-//     }
-
-//     jwt.verify(token, JWT_SECRET, (err, decoded) => {
-//         if (err) {
-//             return res.status(403).json({ message: "Token không hợp lệ!" });
-//         }
-//         // res.status(200).json({ user: { email: decoded.email } });
-//     //    sửa lại 
-//     res.status(200).json({ user: { id: decoded.id } });
-
-//     });
-// };
 export const verifyToken = async (req, res) => {
     const authHeader = req.headers["authorization"];
     const token = authHeader && authHeader.split(" ")[1];

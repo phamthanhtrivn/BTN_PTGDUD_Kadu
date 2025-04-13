@@ -1,6 +1,8 @@
 import orderModel from "../models/orderModel.js";
 import User from "../models/userModel.js";
 
+
+// Tìm người dùng trong DB theo email ⇒ lấy userData._id
 // const userOrders = async (req, res) => {
 //   try {
 //     const { email } = req.body;
@@ -12,6 +14,8 @@ import User from "../models/userModel.js";
 //     res.json({ success: false, message: error.message });
 //   }
 // };
+
+// Tăng tính bảo mật => Lấy đơn hàng theo userID từ token xác thực – an toàn, bảo mật hơn.
 const userOrders = async (req, res) => {
   try {
     const userID = req.user.id;
@@ -23,6 +27,7 @@ const userOrders = async (req, res) => {
   }
 };
 
+// sử dụng thông tin người dùng từ token JWT đã được xác thực trước đó để lấy dữ liệu
 const placeOrder = async (req, res) => {
   try {
     const { items, address, amount } = req.body;
@@ -50,6 +55,7 @@ const placeOrder = async (req, res) => {
 };
 
 
+// sử dụng email để tìm người dùng trong cơ sở dữ liệu => kém bảo mật
 // const placeOrder = async (req, res) => {
 //   try {
 //     const { email, items, address, amount } = req.body

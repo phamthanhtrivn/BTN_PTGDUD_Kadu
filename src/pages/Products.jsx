@@ -82,16 +82,18 @@ const Products = () => {
           >
             FILTERS
             <img
-              className={`h-4 sm:hidden transition-all duration-300 ${showFilter ? "rotate-90" : ""
-                }`}
+              className={`h-4 sm:hidden transition-all duration-300 ${
+                showFilter ? "rotate-90" : ""
+              }`}
               src={images.dropdown_icon}
               alt="dropdown_icon"
             />
           </p>
           {/* Category Filter */}
           <div
-            className={`border border-gray-300 pl-5 py-3 my-5 rounded ${showFilter ? "" : "hidden"
-              } sm:block`}
+            className={`border border-gray-300 pl-5 py-3 my-5 rounded ${
+              showFilter ? "" : "hidden"
+            } sm:block`}
           >
             <p className="mb-3 text-sm font-medium">LOẠI SẢN PHẨM</p>
             <div className="flex flex-col gap-2 text-sm font-light text-gray-700">
@@ -173,8 +175,9 @@ const Products = () => {
               <button
                 key={index}
                 onClick={() => handlePageChange(index + 1)}
-                className={`px-3 py-1 border border-[#005E4F] rounded ${currentPage === index + 1 ? "bg-[#005E4F] text-white" : ""
-                  }`}
+                className={`px-3 py-1 border border-[#005E4F] rounded ${
+                  currentPage === index + 1 ? "bg-[#005E4F] text-white" : ""
+                }`}
               >
                 {index + 1}
               </button>

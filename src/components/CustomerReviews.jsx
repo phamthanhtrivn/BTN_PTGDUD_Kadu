@@ -13,23 +13,28 @@ const reviews = [
     name: "Hoàng Dung",
     role: "Khách hàng thành viên",
     rating: 5,
-    comment: "Tiền nào của đó, bên đây chất lượng thật, giá mềm hơn các chỗ khác. Ủng hộ nha!",
-    image: "https://media-cdn-v2.laodong.vn/storage/newsportal/2025/1/12/1449087/Joo-Ji-Hoon-Choo-You.jpg?w=660",
+    comment:
+      "Tiền nào của đó, bên đây chất lượng thật, giá mềm hơn các chỗ khác. Ủng hộ nha!",
+    image:
+      "https://media-cdn-v2.laodong.vn/storage/newsportal/2025/1/12/1449087/Joo-Ji-Hoon-Choo-You.jpg?w=660",
   },
   {
     id: 2,
     name: "Sở Bình",
     role: "Khách hàng thành viên",
     rating: 5,
-    comment: "Lần đầu vào tôi thật sự rất bất ngờ, nhiều đồ lắm nha, lựa cả tiếng mà các bạn nhân viên vẫn vui vẻ và tư vấn nhiệt tình.",
-    image: "https://danviet.mediacdn.vn/296231569849192448/2025/2/14/the-trauma-code-1a13-1739492857687-1739492857882206918659.jpg",
+    comment:
+      "Lần đầu vào tôi thật sự rất bất ngờ, nhiều đồ lắm nha, lựa cả tiếng mà các bạn nhân viên vẫn vui vẻ và tư vấn nhiệt tình.",
+    image:
+      "https://danviet.mediacdn.vn/296231569849192448/2025/2/14/the-trauma-code-1a13-1739492857687-1739492857882206918659.jpg",
   },
   {
     id: 3,
     name: "Huỳnh Tuyến",
     role: "Khách hàng thành viên",
     rating: 5,
-    comment: "Đồ đẹp lắm nha, 1 năm ghé không biết bao nhiêu lần, lần nào mua cho người yêu mình cũng rất thích. Sẽ luôn ủng hộ.",
+    comment:
+      "Đồ đẹp lắm nha, 1 năm ghé không biết bao nhiêu lần, lần nào mua cho người yêu mình cũng rất thích. Sẽ luôn ủng hộ.",
     image: "https://imedia.imuzik.com.vn/media1/ckfinder/images/2(61).jpg",
   },
   {
@@ -38,7 +43,8 @@ const reviews = [
     role: "Khách hàng mới",
     rating: 4,
     comment: "Sản phẩm ok lắm, sẽ giới thiệu cho bạn bè!",
-    image: "https://phapluat.tuoitrethudo.vn/stores/news_dataimages/vuthihuyen/102019/09/07/10-meme-noi-tieng-nhat-internet-chac-chan-ai-cung-kinh-qua-mot-lan-28-.0631.jpg",
+    image:
+      "https://phapluat.tuoitrethudo.vn/stores/news_dataimages/vuthihuyen/102019/09/07/10-meme-noi-tieng-nhat-internet-chac-chan-ai-cung-kinh-qua-mot-lan-28-.0631.jpg",
   },
   {
     id: 5,
@@ -46,7 +52,8 @@ const reviews = [
     role: "Khách hàng thân thiết",
     rating: 5,
     comment: "Chất lượng 10/10, sẽ quay lại mua tiếp.",
-    image: "https://genk.mediacdn.vn/thumb_w/640/2016/4-success-kid-3596018b-1458201719100-1458267903230.jpg",
+    image:
+      "https://genk.mediacdn.vn/thumb_w/640/2016/4-success-kid-3596018b-1458201719100-1458267903230.jpg",
   },
 ];
 
@@ -153,3 +160,4 @@ const CustomerReviews = () => {
 };
 
 export default CustomerReviews;
+//

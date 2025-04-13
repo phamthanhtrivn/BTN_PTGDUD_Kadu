@@ -55,6 +55,7 @@ export const AuthProvider = ({ children }) => {
       const res = await response.json();
       if (!response.ok || !res.user) throw new Error("Token hết hạn!");
 
+      // Nếu token hợp lệ, lưu user và token
       setUser(res.user);
       setToken(tokenFromStorage);
     } catch (err) {

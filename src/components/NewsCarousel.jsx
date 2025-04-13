@@ -3,9 +3,10 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
-import '../styles/NewsCarousel.css';
-import { Link } from "react-router-dom"; // Thêm import Link
+import "../styles/NewsCarousel.css";
+import { Link } from "react-router-dom";
 
+// lấy dữ liệu fake từ API load
 const NewsCarousel = () => {
   const [news, setNews] = useState([]);
 

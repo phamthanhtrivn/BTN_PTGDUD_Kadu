@@ -1,3 +1,4 @@
+// THIS IS USE IN APP.jsx
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useContext, useEffect, useState } from "react";
 import { ShopContext } from "../context/ShopContext";
@@ -175,17 +176,17 @@ function Cart() {
               </div>
             </div>
             <div className="flex justify-end">
-            <div className="w-full sm:w-[250px]">
-              <div className="w-full text-end">
-                <button
-                  onClick={() => navigate("/place-order")}
-                  className="font-medium bg-[#005E4F] text-white text-sm my-8 px-8 py-3 cursor-pointer border border-[#005E4F] hover:text-[#005E4F] hover:bg-white transition-all duration-300 rounded"
-                >
-                  THANH TOÁN
-                </button>
+              <div className="w-full sm:w-[250px]">
+                <div className="w-full text-end">
+                  <button
+                    onClick={() => navigate("/place-order")}
+                    className="font-medium bg-[#005E4F] text-white text-sm my-8 px-8 py-3 cursor-pointer border border-[#005E4F] hover:text-[#005E4F] hover:bg-white transition-all duration-300 rounded"
+                  >
+                    THANH TOÁN
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
           </div>
         </div>
       )}

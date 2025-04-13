@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import ProductItem from "./ProductItem";
-import "../styles/ProductItem.css"
+import "../styles/ProductItem.css";
 
 const FlashSale = () => {
   const [flashSaleProducts, setFlashSaleProducts] = useState([]);
@@ -14,7 +14,9 @@ const FlashSale = () => {
   useEffect(() => {
     const fetchFlashSaleProducts = async () => {
       try {
-        const response = await fetch("https://67d0f9e5825945773eb281b6.mockapi.io/products_sale");
+        const response = await fetch(
+          "https://67d0f9e5825945773eb281b6.mockapi.io/products_sale"
+        );
         if (!response.ok) {
           throw new Error("Lỗi khi lấy dữ liệu Flash Sale");
         }
@@ -77,7 +79,5 @@ const FlashSale = () => {
     </div>
   );
 };
-
 export default FlashSale;
-
-
+//

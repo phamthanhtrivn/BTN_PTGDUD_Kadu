@@ -33,7 +33,6 @@ const Header = () => {
     `text-[15px] ${
       isActive ? "text-[#005E4F]" : "text-black"
     } hover:text-[#005E4F] hover:font-semibold transition-all duration-200`;
-
   return (
     <header className="sticky top-0 z-50 bg-white shadow-md py-4 px-6 flex items-center justify-between">
       {/* Logo */}
@@ -113,7 +112,7 @@ const Header = () => {
           </span>
         </Link>
 
-        {/* Mobile Menu Icon */}
+        {/*Menu Icon */}
         <img
           onClick={() => setVisibleMenu(true)}
           src={images.menu_icon}

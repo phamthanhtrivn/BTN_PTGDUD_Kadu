@@ -62,7 +62,11 @@ const ShopContextProvider = ({ children }) => {
         await axios.post(
           "http://localhost:3001/cart/add",
           { productID: id, quantity },
-          { headers: { token } }
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
       } catch (error) {
         console.log(error);
@@ -81,7 +85,11 @@ const ShopContextProvider = ({ children }) => {
         await axios.post(
           "http://localhost:3001/cart/update",
           { productID: id, quantity },
-          { headers: { token } }
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
       } catch (error) {
         console.log(error);
@@ -98,7 +106,11 @@ const ShopContextProvider = ({ children }) => {
         await axios.post(
           "http://localhost:3001/cart/delete",
           { productID: id },
-          { headers: { token } }
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
       } catch (error) {
         console.log(error);
@@ -114,7 +126,11 @@ const ShopContextProvider = ({ children }) => {
       const response = await axios.post(
         "http://localhost:3001/cart/get",
         {},
-        { headers: { token } }
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
 
       if (response.data.success) {

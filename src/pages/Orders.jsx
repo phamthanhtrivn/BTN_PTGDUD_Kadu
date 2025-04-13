@@ -6,30 +6,35 @@ import { toast } from "react-toastify";
 function Orders() {
   const { token, currency, formatMoney, navigate } = useContext(ShopContext);
 
-  const [orderData, setOrderData] = useState([])
+  const [orderData, setOrderData] = useState([]);
 
   const loadOrderData = async () => {
     try {
-      if (!token) {
-        return null;
-      }
+      if (!token) return;
 
-      const response = await axios.post("http://localhost:3001/order/list", {}, { headers: { token } })
+      const response = await axios.post(
+        "http://localhost:3001/order/list",
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
       if (response.data.success) {
         setOrderData(response.data.orders.reverse());
-
-
       }
-
     } catch (error) {
       console.log(error);
-      toast.error(error.message)
+      toast.error(error.message);
     }
-  }
+  };
+
   useEffect(() => {
-    loadOrderData()
+    loadOrderData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [token])
+  }, [token]);
 
   return (
     <div className="container mx-auto p-4">
@@ -93,5 +98,4 @@ function Orders() {
     </div>
   );
 }
-
 export default Orders;

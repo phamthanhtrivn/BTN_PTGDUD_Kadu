@@ -1,12 +1,29 @@
 import { useState, useEffect, useRef } from "react";
 import "../styles/CategorySection.css";
-
+// trang này chỉ hiển thị dữ liệu cơ bản, không liên quan đến backend
 const categories = [
-  { name: "Bút viết", image: "https://cdn-icons-png.flaticon.com/128/235/235294.png" },
-  { name: "Văn phòng phẩm", image: "https://cdn-icons-png.flaticon.com/128/1086/1086525.png" },
-  { name: "Dụng cụ học tập", image: "https://cdn-icons-png.flaticon.com/128/3389/3389081.png" },
-  { name: "Giấy in", image: "https://cdn2494.cdn-template-4s.com/thumbs/template/menu_icon_5_thumb_500.webp" },
-  { name: "Đèn học", image: "https://cdn2494.cdn-template-4s.com/thumbs/template/menu_icon_9_thumb_500.webp" },
+  {
+    name: "Bút viết",
+    image: "https://cdn-icons-png.flaticon.com/128/235/235294.png",
+  },
+  {
+    name: "Văn phòng phẩm",
+    image: "https://cdn-icons-png.flaticon.com/128/1086/1086525.png",
+  },
+  {
+    name: "Dụng cụ học tập",
+    image: "https://cdn-icons-png.flaticon.com/128/3389/3389081.png",
+  },
+  {
+    name: "Giấy in",
+    image:
+      "https://cdn2494.cdn-template-4s.com/thumbs/template/menu_icon_5_thumb_500.webp",
+  },
+  {
+    name: "Đèn học",
+    image:
+      "https://cdn2494.cdn-template-4s.com/thumbs/template/menu_icon_9_thumb_500.webp",
+  },
 ];
 
 const CategorySection = () => {

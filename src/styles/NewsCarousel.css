@@ -1,8 +1,10 @@
+/* css cho components trong home */
 .news-carousel {
     padding: 3rem 1rem;
     position: relative;
   }
-  
+ 
+
   .news-carousel h2 {
     margin-bottom: 0.5rem;
   }

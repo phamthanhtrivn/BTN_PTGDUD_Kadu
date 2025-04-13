@@ -6,11 +6,15 @@ export default function LogoSlide() {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const logos = [
-    images.logo1, images.logo2, images.logo3, images.logo4, images.logo5
+    images.logo1,
+    images.logo2,
+    images.logo3,
+    images.logo4,
+    images.logo5,
   ];
 
   const slideWidth = sliderRef.current ? sliderRef.current.clientWidth : 0;
-  
+
   const goToSlide = (index) => {
     if (sliderRef.current) {
       const scrollX = index * slideWidth;
@@ -21,9 +25,18 @@ export default function LogoSlide() {
 
   return (
     <div className="bg-white p-6 text-center relative">
-      <div ref={sliderRef} className="flex gap-14 overflow-x-auto whitespace-nowrap px-4 scrollbar-hide" style={{ scrollBehavior: "smooth", overflow: "hidden" }}>
+      <div
+        ref={sliderRef}
+        className="flex gap-14 overflow-x-auto whitespace-nowrap px-4 scrollbar-hide"
+        style={{ scrollBehavior: "smooth", overflow: "hidden" }}
+      >
         {logos.map((logo, index) => (
-          <img key={index} src={logo} alt={`Logo ${index + 1}`} className="h-33 w-auto flex-shrink-0" />
+          <img
+            key={index}
+            src={logo}
+            alt={`Logo ${index + 1}`}
+            className="h-33 w-auto flex-shrink-0"
+          />
         ))}
       </div>
       <div className="flex justify-center gap-3 mt-4">

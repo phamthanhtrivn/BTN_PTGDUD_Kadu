@@ -1,63 +1,61 @@
+// import { createContext, useState } from "react";
+// import { products } from "../assets/assets";
+// import { useNavigate } from "react-router-dom";
 
+// export const ShopContext = createContext();
 
-import { createContext, useState } from "react";
-import { products } from "../assets/assets";
-import { useNavigate } from "react-router-dom";
+// const ShopContextProvider = ({ children }) => {
+//   console.log("Products in ShopContextProvider:", products); // Kiểm tra dữ liệu products
 
-export const ShopContext = createContext();
+//   const [visibleMenu, setVisibleMenu] = useState(false);
+//   const [showSearchBar, setShowSearchBar] = useState(false);
+//   const [search, setSearch] = useState("");
+//   const [cartItems, setCartItems] = useState([]);
+//   const navigate = useNavigate();
 
-const ShopContextProvider = ({ children }) => {
-  console.log("Products in ShopContextProvider:", products); // Kiểm tra dữ liệu products
+//   const currency = "VNĐ";
+//   const formatMoney = (number) => {
+//     return Number(number).toLocaleString("vi-VN");
+//   };
 
-  const [visibleMenu, setVisibleMenu] = useState(false);
-  const [showSearchBar, setShowSearchBar] = useState(false);
-  const [search, setSearch] = useState("");
-  const [cartItems, setCartItems] = useState([]);
-  const navigate = useNavigate();
+//   const getCartTotalQuantity = () => {
+//     return cartItems.reduce((arr, cur) => {
+//       return arr + cur.quantity;
+//     }, 0);
+//   };
 
-  const currency = "VNĐ";
-  const formatMoney = (number) => {
-    return Number(number).toLocaleString("vi-VN");
-  };
+//   const handleAddToCart = (productID, quantity = 1) => {
+//     setCartItems((prevCart) => {
+//       const existing = prevCart.find((item) => item.productID === productID);
+//       if (existing) {
+//         return prevCart.map((item) =>
+//           item.productID === productID
+//             ? { ...item, quantity: item.quantity + quantity }
+//             : item
+//         );
+//       } else {
+//         return [...prevCart, { productID, quantity }];
+//       }
+//     });
+//   };
 
-  const getCartTotalQuantity = () => {
-    return cartItems.reduce((arr, cur) => {
-      return arr + cur.quantity;
-    }, 0);
-  };
+//   const value = {
+//     products,
+//     navigate,
+//     visibleMenu,
+//     setVisibleMenu,
+//     formatMoney,
+//     currency,
+//     showSearchBar,
+//     setShowSearchBar,
+//     search,
+//     setSearch,
+//     getCartTotalQuantity,
+//     handleAddToCart,
+//     cartItems,
+//   };
 
-  const handleAddToCart = (productID, quantity = 1) => {
-    setCartItems((prevCart) => {
-      const existing = prevCart.find((item) => item.productID === productID);
-      if (existing) {
-        return prevCart.map((item) =>
-          item.productID === productID
-            ? { ...item, quantity: item.quantity + quantity }
-            : item
-        );
-      } else {
-        return [...prevCart, { productID, quantity }];
-      }
-    });
-  };
+//   return <ShopContext.Provider value={value}>{children}</ShopContext.Provider>;
+// };
 
-  const value = {
-    products,
-    navigate,
-    visibleMenu,
-    setVisibleMenu,
-    formatMoney,
-    currency,
-    showSearchBar,
-    setShowSearchBar,
-    search,
-    setSearch,
-    getCartTotalQuantity,
-    handleAddToCart,
-    cartItems,
-  };
-
-  return <ShopContext.Provider value={value}>{children}</ShopContext.Provider>;
-};
-
-export default ShopContextProvider;
+// export default ShopContextProvider;

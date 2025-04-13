@@ -1,3 +1,4 @@
+// THIS IS USE IN APP.jsx
 import React, { useEffect, useState } from "react";
 import { articles } from "../assets/assets";
 import Article from "../components/Article";

@@ -67,7 +67,9 @@ const NewsCarousel = () => {
               </div>
               <div className="p-5">
                 <h3 className="text-xl font-semibold text-gray-800 line-clamp-2 mb-2 group-hover:text-blue-600 transition-colors">
-                  <a href="https://nhandan.vn/doc-sach/">{item.title}</a>
+                  <a href="https://thanhbinh.net.vn/5-cuon-so-tay-giup-chung-ta-hoan-thien-ban-than-hon/">
+                    {item.title}
+                  </a>
                 </h3>
                 <p className="text-gray-600 text-sm line-clamp-3">
                   {item.description}

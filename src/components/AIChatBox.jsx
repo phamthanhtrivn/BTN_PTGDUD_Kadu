@@ -1,16 +1,16 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { createPortal } from "react-dom";
-import { useLocation } from "react-router-dom"; // gọi bên trên là OK
+import { useLocation } from "react-router-dom";
 
 const AIChatBox = () => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [isOpen, setIsOpen] = useState(true);
   const [loading, setLoading] = useState(false);
-  const location = useLocation(); // ✅ gọi hook sớm, trước mọi return
+  const location = useLocation(); // gọi hook sớm trước mọi return
 
-  // ✅ KHÔNG return null trước hook nào
+  // không trả về null trước hook nào
   const hiddenRoutes = ["/login", "/register"];
   const isHidden = hiddenRoutes.includes(location.pathname); // xử lý bằng biến
 
@@ -20,7 +20,7 @@ const AIChatBox = () => {
       setMessages(JSON.parse(stored));
     }
 
-    // ✅ Ngăn lặp câu chào bằng biến flag
+    // dùng biến flag để ngăn chặn câu chào hiển thị nhiều lần
     const justLoggedIn = localStorage.getItem("justLoggedIn") === "true";
     const hasWelcomed = sessionStorage.getItem("hasWelcomed") === "true";
 
@@ -35,9 +35,9 @@ const AIChatBox = () => {
         return newMessages;
       });
 
-      // ✅ Đánh dấu là đã gửi chào
+      // Đánh dấu là đã gửi chào
       localStorage.setItem("justLoggedIn", "false");
-      sessionStorage.setItem("hasWelcomed", "true"); // 👈 đảm bảo trong session không chào lại
+      sessionStorage.setItem("hasWelcomed", "true"); // set để không bị lặp lại lời chào
     }
   }, []);
 
@@ -83,7 +83,7 @@ const AIChatBox = () => {
     }
   };
 
-  if (isHidden) return null; // ✅ sau khi hook đã được gọi
+  if (isHidden) return null; // sau khi hook đã được gọi
 
   return createPortal(
     <div className="fixed bottom-6 right-6 lg:right-[2vw] z-[9999999] w-[90%] max-w-sm sm:w-[360px] text-base font-sans">

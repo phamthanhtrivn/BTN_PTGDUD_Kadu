@@ -12,7 +12,7 @@ const formatDate = (time) => {
 const ArticleCard = ({ article, onClick }) => {
   return (
     <div
-      className="w-full max-w-xs bg-white rounded-md shadow-sm hover:shadow-md hover:-translate-y-1 cursor-pointer transition-all duration-300 overflow-hidden flex flex-col h-full"
+      className="m-4 max-w-xs bg-white rounded-md shadow-sm hover:shadow-md hover:-translate-y-1 cursor-pointer transition-all duration-300 overflow-hidden flex flex-col h-full"
       onClick={onClick}
     >
       {/* Ảnh bài viết */}
@@ -59,4 +59,3 @@ const ArticleCard = ({ article, onClick }) => {
 
 export default ArticleCard;
 //
-

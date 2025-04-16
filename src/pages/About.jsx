@@ -18,7 +18,7 @@ const About = () => {
   };
   return (
     <>
-      <div className="flex flex-col md:flex-row gap-8">
+      <div className="flex flex-col md:flex-row gap-8 m-4">
         {/* Main Content chiếm 100% ở mobile, 70% ở md trở lên */}
         <div className="main-content w-full md:w-[70%]">
           <Article article={mainArticle} />
@@ -37,8 +37,8 @@ const About = () => {
         </div>
       </div>
 
-      <h1 className="my-5 font-bold text-2xl">Bài viết liên quan</h1>
-      <div className="xem-them grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-4 gap-3">
+      <h1 className="ml-4 font-bold text-2xl">Bài viết liên quan</h1>
+      <div className="xem-them grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-4">
         {articles.slice(0, 4).map((article, index) => (
           <ArticleCard
             key={index}

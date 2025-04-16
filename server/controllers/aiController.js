@@ -9,7 +9,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const productFilePath = path.join(__dirname, "../data/products.json");
 const articleFilePath = path.join(__dirname, "../data/articles.json");
-
+// 
 // Đọc dữ liệu từ file data/...json
 const getProducts = () => {
   try {

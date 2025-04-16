@@ -89,7 +89,7 @@ const Products = () => {
   }, [category, products, sortType, search]);
 
   return (
-    <>
+    <div className="m-6">
       <SearchBar />
       <div className="flex flex-col sm:flex-row sm:gap-10 gap-1">
         <div className="min-w-50">
@@ -202,7 +202,7 @@ const Products = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

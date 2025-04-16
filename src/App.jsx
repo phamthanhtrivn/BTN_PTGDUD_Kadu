@@ -31,7 +31,7 @@ const App = () => {
 
         {/* Layout chính: chứa Header, Footer, các trang */}
         {/* <div className="px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw] pb-[120px]"> */}
-        <div className="pb-[120px]">
+        <div className="pb-[120px] mt-3">
           <Header />
           <SidebarMenu />
           <Routes>
@@ -55,7 +55,7 @@ const App = () => {
           <Footer />
         </div>
 
-        {/* 🚀 Đưa ChatBox ra ngoài layout, full screen góc phải */}
+        {/* Đưa ChatBox ra ngoài layout, full screen góc phải */}
         <AIChatBox />
       </ShopContextProvider>
     </AuthProvider>

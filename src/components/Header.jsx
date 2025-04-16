@@ -29,10 +29,14 @@ const Header = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  // ✅ Cập nhật hiệu ứng gạch chân ở menu đang được chọn
   const navLinkClass = ({ isActive }) =>
     `text-[15px] ${
-      isActive ? "text-[#005E4F]" : "text-black"
+      isActive
+        ? "text-[#005E4F] border-b-2 border-[#005E4F] pb-1 font-semibold"
+        : "text-black"
     } hover:text-[#005E4F] hover:font-semibold transition-all duration-200`;
+
   return (
     <header className="sticky top-0 z-50 bg-white shadow-md py-4 px-6 flex items-center justify-between">
       {/* Logo */}
@@ -112,7 +116,7 @@ const Header = () => {
           </span>
         </Link>
 
-        {/*Menu Icon */}
+        {/* Menu Icon */}
         <img
           onClick={() => setVisibleMenu(true)}
           src={images.menu_icon}

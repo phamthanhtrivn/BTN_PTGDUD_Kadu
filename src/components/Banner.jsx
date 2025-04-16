@@ -25,7 +25,7 @@ const FeatureBox = () => {
   ];
 
   return (
-    <div className="w-[320px] flex flex-col gap-4 p-6 bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl shadow-md hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-1">
+    <div className="flex flex-col gap-4 p-6 bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl shadow-md hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-1 w-full sm:max-w-md md:max-w-lg lg:max-w-xl flex-1 min-w-[280px] max-w-[400px]">
       {features.map((feature, index) => (
         <div
           key={index}

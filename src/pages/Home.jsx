@@ -56,8 +56,6 @@ const Home = () => {
       <Banner />
       <CategorySection />
       <br />
-
-      <br />
       <WhyChooseUs />
       <br />
       <CustomerReviews />

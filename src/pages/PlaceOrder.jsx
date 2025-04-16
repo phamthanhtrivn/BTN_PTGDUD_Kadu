@@ -42,7 +42,9 @@ const PlaceOrder = () => {
       const response = await axios.post(
         "http://localhost:3001/auth/get",
         {},
-        { headers: { token } }
+        // { headers: { token } }
+        //API yêu cầu xác thực qua Authorization nên dùng cách dưới sẽ giảm thiểu rủi ro lỗi phát sinh
+        { headers: { Authorization: `Bearer ${token}` } }
       );
       if (response.data.success) {
         const user = response.data.user;
@@ -87,17 +89,13 @@ const PlaceOrder = () => {
     };
 
     try {
-      // const response = await axios.post("http://localhost:3001/order/place", orderData, { headers: { token }})
-
-      // if (response.data.success) {
-      //   toast.success(response.data.message)
-      //   setCartItems([])
-      //   navigate('/orders')
-      // }
       const response = await axios.post(
         "http://localhost:3001/order/place",
         orderData,
-        { headers: { token } }
+        // { headers: { token } }
+        // Backend yêu cầu token ở dạng Bearer thông qua Authorization
+
+        { headers: { Authorization: `Bearer ${token}` } }
       );
 
       if (response.data.success) {

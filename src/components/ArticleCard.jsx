@@ -59,3 +59,4 @@ const ArticleCard = ({ article, onClick }) => {
 
 export default ArticleCard;
 //
+

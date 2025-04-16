@@ -1,4 +1,3 @@
-// Chỉ dùng riêng cho AIChatBox
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -11,11 +10,7 @@ const __dirname = path.dirname(__filename);
 const productFilePath = path.join(__dirname, "../data/products.json");
 const articleFilePath = path.join(__dirname, "../data/articles.json");
 
-// const getProducts = () => {
-//   const raw = fs.readFileSync(productFilePath, "utf-8");
-//   return JSON.parse(raw);
-// };
-
+// Đọc dữ liệu từ file data/...json
 const getProducts = () => {
   try {
     const raw = fs.readFileSync(productFilePath, "utf-8");
@@ -30,7 +25,7 @@ const getProducts = () => {
   }
 };
 
-
+// Đọc dữ liệu từ file data/...json
 const getArticles = () => {
   try {
     const raw = fs.readFileSync(articleFilePath, "utf-8");
@@ -51,13 +46,14 @@ export const aiAssistantController = async (req, res) => {
   try {
     let contextReply = "";
 
-    // 1️⃣ Nếu người dùng gửi mã đơn hàng
-    const orderIdMatch = message.match(/(?:đơn hàng|order)\s?#?([a-fA-F0-9]{24})/);
+    // kiểm tra đơn hàng theo mã { nếu nhớ - hầu như ít dùng tới}
+    const orderIdMatch = message.match(/([a-f0-9]{24})/); // Kiểm tra mã đơn hàng theo định dạng MongoDB ObjectId
     if (orderIdMatch) {
       const mongoId = orderIdMatch[1];
       const order = await Order.findById(mongoId);
       if (order) {
-        contextReply += `Đơn hàng ${mongoId}:\n- Tổng tiền: ${order.amount}₫\n- Giao tới: ${order.address?.city || "?"}\n- Ngày đặt: ${new Date(order.date).toLocaleDateString("vi-VN")}\n\n`;
+        const productList = order.items.map(item => `+ ${item.name} (x${item.quantity})`).join("\n");
+        contextReply += `Thông tin đơn hàng #${mongoId}:\n${productList}\n- Tổng tiền: ${order.amount}₫\n- Giao tới: ${order.address?.city || "?"}\n- Ngày đặt: ${new Date(order.date).toLocaleDateString("vi-VN")}\n\n`;
       } else {
         contextReply += `Không tìm thấy đơn hàng với mã ${mongoId}.\n\n`;
       }
@@ -68,8 +64,10 @@ export const aiAssistantController = async (req, res) => {
         const userID = decoded.id;
         const lastOrder = await Order.findOne({ userID }).sort({ date: -1 });
         if (lastOrder) {
-          contextReply += `Đơn hàng gần nhất:\n- Tổng tiền: ${lastOrder.amount}₫\n- Giao tới: ${lastOrder.address?.city || "?"}\n- Ngày đặt: ${new Date(lastOrder.date).toLocaleDateString("vi-VN")}\n\n`;
-        } else {
+          const productList = lastOrder.items.map(item => `+ ${item.name} (x${item.quantity})`).join("\n");
+          contextReply += `Đơn hàng gần nhất:\n${productList}\n- Tổng tiền: ${lastOrder.amount}₫\n- Giao tới: ${lastOrder.address?.city || "?"}\n- Ngày đặt: ${new Date(lastOrder.date).toLocaleDateString("vi-VN")}\n\n`;
+        }
+        else {
           contextReply += "Không tìm thấy đơn hàng gần đây.\n\n";
         }
       } catch (err) {
@@ -78,7 +76,7 @@ export const aiAssistantController = async (req, res) => {
       }
     }
 
-    // 2️⃣ Gợi ý sản phẩm nếu có keyword
+    // Gợi ý sản phẩm nếu có keyword
     const keywordMatch = message.match(/(bút|giấy|vở|sổ|gôm|keo|đèn|học sinh|văn phòng phẩm)/i);
     if (keywordMatch) {
       const keyword = keywordMatch[1].toLowerCase();
@@ -102,7 +100,7 @@ export const aiAssistantController = async (req, res) => {
       }
     }
 
-    // 3️⃣ Gợi ý bài viết nếu có keyword liên quan
+    // Gợi ý bài viết nếu có key liên quan
     const articleKeywordMatch = message.match(/(giới thiệu|mẹo|blog|bài viết)/i);
     if (articleKeywordMatch) {
       const keyword = articleKeywordMatch[1].toLowerCase();
@@ -126,11 +124,11 @@ export const aiAssistantController = async (req, res) => {
       }
     }
 
-    // 4️⃣ Ghép messages (history + câu hiện tại)
+    // định dạng cho AI
     const fullMessages = [
       {
         role: "system",
-        content: `Bạn là một trợ lý chăm sóc khách hàng chuyên nghiệp cho Kadu - cửa hàng văn phòng phẩm. 
+        content: `Bạn là một trợ lý chăm sóc khách hàng chuyên nghiệp của Kadu - cửa hàng văn phòng phẩm. 
         Chỉ trả lời dựa trên dữ liệu được cung cấp trong hệ thống (contextReply).
         - Tuyệt đối không lặp lại câu hỏi của khách.
         - Trả lời ngắn gọn, đúng trọng tâm, tối đa 3 dòng.
@@ -149,7 +147,7 @@ export const aiAssistantController = async (req, res) => {
       }
     ];
 
-    // 5️⃣ Gọi OpenRouter AI
+    //OpenRouter AI
     const aiRes = await fetch("https://openrouter.ai/api/v1/chat/completions", {
       method: "POST",
       headers: {
@@ -171,103 +169,3 @@ export const aiAssistantController = async (req, res) => {
     res.status(500).json({ reply: "❌ Gọi AI thất bại. Vui lòng kiểm tra API Key hoặc nội dung gửi." });
   }
 };
-
-// export const aiAssistantController = async (req, res) => {
-//   const { message, messages: chatHistory = [] } = req.body;
-
-//   try {
-//     let contextReply = "";
-
-//     // 1️⃣ Nếu người dùng gửi mã đơn hàng
-//     const orderIdMatch = message.match(/(?:đơn hàng|order)\s?#?([a-fA-F0-9]{24})/);
-//     if (orderIdMatch) {
-//       const mongoId = orderIdMatch[1];
-//       const order = await Order.findById(mongoId);
-//       if (order) {
-//         contextReply += `Đơn hàng ${mongoId}:\n- Tổng tiền: ${order.amount}₫\n- Giao tới: ${order.address?.city || "?"}\n- Ngày đặt: ${new Date(order.date).toLocaleDateString("vi-VN")}\n\n`;
-//       } else {
-//         contextReply += `Không tìm thấy đơn hàng với mã ${mongoId}.\n\n`;
-//       }
-//     } else if (req.headers.token || req.headers.authorization) {
-//       try {
-//         const token = req.headers.token || req.headers.authorization?.split(" ")[1];
-//         const decoded = jwt.verify(token, process.env.JWT_SECRET);
-//         const userID = decoded.id;
-//         const lastOrder = await Order.findOne({ userID }).sort({ date: -1 });
-//         if (lastOrder) {
-//           contextReply += `Đơn hàng gần nhất:\n- Tổng tiền: ${lastOrder.amount}₫\n- Giao tới: ${lastOrder.address?.city || "?"}\n- Ngày đặt: ${new Date(lastOrder.date).toLocaleDateString("vi-VN")}\n\n`;
-//         } else {
-//           contextReply += "Không tìm thấy đơn hàng gần đây.\n\n";
-//         }
-//       } catch (err) {
-//         console.error("❌ Lỗi xác thực token:", err.message);
-//         contextReply += "Không thể kiểm tra đơn hàng vì token không hợp lệ.\n\n";
-//       }
-//     }
-
-//     // 2️⃣ Gợi ý sản phẩm nếu có keyword
-//     const keywordMatch = message.match(/(bút|giấy|vở|sổ|gôm|keo|đèn|học sinh|văn phòng phẩm)/i);
-//     if (keywordMatch) {
-//       const keyword = keywordMatch[1].toLowerCase();
-//       const products = getProducts();
-//       const matched = products.filter(p =>
-//         p.name.toLowerCase().includes(keyword) ||
-//         p.category.toLowerCase().includes(keyword)
-//       ).slice(0, 3);
-
-//       if (matched.length > 0) {
-//         contextReply += `Sản phẩm phù hợp:\n`;
-//         matched.forEach((p) => {
-//           contextReply += `- ${p.name} (${p.category}) – ${p.price}₫\n`;
-//         });
-//         contextReply += "\n";
-//       }
-//     }
-
-//     // 3️⃣ Ghép messages (history + câu hiện tại)
-//     const fullMessages = [
-//       {
-//         role: "system",
-//         content: `Bạn là một trợ lý chăm sóc khách hàng chuyên nghiệp cho Kadu - cửa hàng văn phòng phẩm. 
-//         Chỉ trả lời dựa trên dữ liệu được cung cấp trong hệ thống (contextReply).
-//         - Tuyệt đối không lặp lại câu hỏi của khách.
-//         - Trả lời ngắn gọn, đúng trọng tâm, tối đa 3 dòng.
-//         - Có thể giao tiếp bằng nhiều ngôn ngữ khác nhau.
-//         - Không dùng markdown, không quá nhiều emoji, không viết kiểu chatbot.
-//         - Có thể nối tiếp nội dung đang hỏi.
-//         - Nếu không đủ dữ liệu, hãy trả lời: "Tôi chưa có thông tin đơn hàng đó."`
-//       },
-//       // 👇 Convert lịch sử cũ (nếu có)
-//       ...chatHistory.map((m) => ({
-//         role: m.from === "user" ? "user" : "assistant",
-//         content: m.text,
-//       })),
-//       // 👇 Thêm câu hỏi mới
-//       {
-//         role: "user",
-//         content: `Thông tin từ hệ thống:\n${contextReply}\n\nCâu hỏi khách: "${message}"`
-//       }
-//     ];
-
-//     // 4️⃣ Gọi OpenRouter AI
-//     const aiRes = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-//       method: "POST",
-//       headers: {
-//         "Content-Type": "application/json",
-//         Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}`,
-//       },
-//       body: JSON.stringify({
-//         model: "mistralai/mistral-7b-instruct",
-//         messages: fullMessages,
-//       }),
-//     });
-
-//     const data = await aiRes.json();
-//     const reply = data.choices?.[0]?.message?.content || "Tôi chưa thể phản hồi lúc này.";
-
-//     res.json({ reply });
-//   } catch (err) {
-//     console.error("❌ Lỗi AI:", err);
-//     res.status(500).json({ reply: "❌ Gọi AI thất bại. Vui lòng kiểm tra API Key hoặc nội dung gửi." });
-//   }
-// };

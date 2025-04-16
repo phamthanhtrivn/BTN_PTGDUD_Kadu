@@ -1,5 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import "../styles/CategorySection.css";
+
+import { useNavigate } from "react-router-dom";
+
 // trang này chỉ hiển thị dữ liệu cơ bản, không liên quan đến backend
 const categories = [
   {
@@ -11,7 +14,7 @@ const categories = [
     image: "https://cdn-icons-png.flaticon.com/128/1086/1086525.png",
   },
   {
-    name: "Dụng cụ học tập",
+    name: "Sách vở",
     image: "https://cdn-icons-png.flaticon.com/128/3389/3389081.png",
   },
   {
@@ -26,10 +29,19 @@ const categories = [
   },
 ];
 
+// dùng navigate để điều hướng trang sang bên /products
+// click vào ảnh sẽ chuyển hướng sang trang Products
+
 const CategorySection = () => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef(null);
+  const navigate = useNavigate();
+
+  const handleCategoryClick = (categoryName) => {
+    const encoded = encodeURIComponent(categoryName);
+    navigate(`/products?category=${encoded}`);
+  };
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -37,7 +49,7 @@ const CategorySection = () => {
         if (entry.isIntersecting) {
           setIsVisible(true);
         } else {
-          setIsVisible(false); // Reset khi ra khỏi viewport để hiệu ứng lặp lại
+          setIsVisible(false); // Reset tránh hiệu ứng lặp lại
         }
       },
       {
@@ -82,6 +94,7 @@ const CategorySection = () => {
             style={{ transitionDelay: `${index * 100}ms` }} // Tạo hiệu ứng tuần tự
             onMouseEnter={() => setHoveredIndex(index)}
             onMouseLeave={() => setHoveredIndex(null)}
+            onClick={() => handleCategoryClick(category.name)}
           >
             <div
               className={`category-box bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 p-4 flex flex-col items-center ${

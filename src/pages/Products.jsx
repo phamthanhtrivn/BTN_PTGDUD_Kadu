@@ -5,6 +5,8 @@ import ProductItem from "../components/ProductItem";
 import SearchBar from "../components/SearchBar";
 import { images } from "../assets/assets";
 
+import { useLocation } from "react-router-dom";
+
 const Products = () => {
   const { products, showSearchBar, search } = useContext(ShopContext);
   const [showFilter, setShowFilter] = useState(false);
@@ -12,6 +14,21 @@ const Products = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [filterProducts, setFilterProducts] = useState(products);
   const [sortType, setSortType] = useState("");
+
+  //dùng location_thêm
+  const location = useLocation();
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const categoryFromUrl = params.get("category");
+
+    if (categoryFromUrl) {
+      setCategory([categoryFromUrl]);
+      setShowFilter(true);
+    }
+  }, [location.search]);
+
+  //
 
   const productPerPage = 8;
   const indexOfLastProduct = currentPage * productPerPage;

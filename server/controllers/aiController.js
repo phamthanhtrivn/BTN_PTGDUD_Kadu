@@ -42,37 +42,52 @@ export const aiAssistantController = async (req, res) => {
   let contextReply = "";
 
   try {
-    // Kiểm tra nếu có mã đơn hàng MongoDB ObjectId
-    const orderIdMatch = message.match(/(?:mã đơn hàng[:\s]*)?([a-f0-9]{24})/i);
-    if (orderIdMatch) {
+    // Regex cho mã đơn hàng KDU-YYYYMMDD-XXX
+    const orderCodeMatch = message.match(/(?:mã đơn hàng[:\s]*|order[:\s]*|#)?KDU-(\d{8})-(\d{3})\b/i);
+    // dùng chpo mã trong monggo - ObjectId (phòng trường hợp vẫn cần)
+    const orderIdMatch = message.match(/(?:mã đơn hàng[:\s]*|order[:\s]*|#)?([a-fA-F0-9]{24})\b/i);
+
+    // Ưu tiên tìm bằng mã đơn hàng mới
+    if (orderCodeMatch) {
+      const orderCode = `KDU-${orderCodeMatch[1]}-${orderCodeMatch[2]}`;
+      const order = await Order.findOne({ code: orderCode });
+
+      if (order) {
+        const productList = order.items.map(item => `+ ${item.name} (x${item.quantity})`).join("\n");
+        contextReply += `Đơn hàng #${orderCode}:\n${productList}\n- Tổng tiền: ${order.amount}₫\n- Giao tới: ${order.address?.city || "?"}\n- Ngày đặt: ${new Date(order.date).toLocaleDateString("vi-VN")}\n\n`;
+      } else {
+        contextReply += `Không tìm thấy đơn hàng với mã ${orderCode}.\n\n`;
+      }
+    }
+    // Nếu không có mã đơn hàng mới, thử ObjectId
+    else if (orderIdMatch) {
       const mongoId = orderIdMatch[1];
       const order = await Order.findById(mongoId);
 
       if (order) {
         const productList = order.items.map(item => `+ ${item.name} (x${item.quantity})`).join("\n");
-        contextReply += `Thông tin đơn hàng #${mongoId}:\n${productList}\n- Tổng tiền: ${order.amount}₫\n- Giao tới: ${order.address?.city || "?"}\n- Ngày đặt: ${new Date(order.date).toLocaleDateString("vi-VN")}\n\n`;
+        contextReply += `Đơn hàng #${mongoId}:\n${productList}\n- Tổng tiền: ${order.amount}₫\n- Giao tới: ${order.address?.city || "?"}\n- Ngày đặt: ${new Date(order.date).toLocaleDateString("vi-VN")}\n\n`;
       } else {
-        contextReply += `Tôi chưa có thông tin đơn hàng đó.\n\n`;
+        contextReply += `Không tìm thấy đơn hàng với mã ${mongoId}.\n\n`;
       }
     }
-
-    // Nếu không có mã nhưng có token thì tìm đơn gần nhất
-    else if (req.headers.token || req.headers.authorization) {
+    // Nếu không có mã, kiểm tra đơn hàng gần nhất bằng token
+    else if (req.headers.authorization || req.headers.token) {
       try {
-        const token = req.headers.token || req.headers.authorization?.split(" ")[1];
+        const token = req.headers.authorization?.split(" ")[1] || req.headers.token;
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         const userID = decoded.id;
 
         const lastOrder = await Order.findOne({ userID }).sort({ date: -1 });
         if (lastOrder) {
           const productList = lastOrder.items.map(item => `+ ${item.name} (x${item.quantity})`).join("\n");
-          contextReply += `Đơn hàng gần nhất:\n${productList}\n- Tổng tiền: ${lastOrder.amount}₫\n- Giao tới: ${lastOrder.address?.city || "?"}\n- Ngày đặt: ${new Date(lastOrder.date).toLocaleDateString("vi-VN")}\n\n`;
+          contextReply += `Đơn hàng gần nhất #${lastOrder.code || lastOrder._id}:\n${productList}\n- Tổng tiền: ${lastOrder.amount}₫\n- Giao tới: ${lastOrder.address?.city || "?"}\n- Ngày đặt: ${new Date(lastOrder.date).toLocaleDateString("vi-VN")}\n\n`;
         } else {
           contextReply += "Không tìm thấy đơn hàng gần đây.\n\n";
         }
       } catch (err) {
         console.error("❌ Lỗi xác thực token:", err.message);
-        contextReply += "Không thể kiểm tra đơn hàng vì token không hợp lệ.\n\n";
+        contextReply += "Không thể kiểm tra đơn hàng do lỗi xác thực.\n\n";
       }
     }
 
@@ -160,6 +175,6 @@ Chỉ trả lời dựa trên dữ liệu được cung cấp trong hệ thống
 
   } catch (err) {
     console.error("❌ Lỗi AI:", err);
-    res.status(500).json({ reply: "❌ Gọi AI thất bại. Vui lòng kiểm tra API Key hoặc nội dung gửi." });
+    res.status(500).json({ reply: "Lỗi hệ thống. Vui lòng thử lại sau." });
   }
 };

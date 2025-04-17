@@ -60,7 +60,7 @@ const AIChatBox = () => {
           "Content-Type": "application/json",
           token: localStorage.getItem("site"),
         },
-        body: JSON.stringify({ message: input }),
+        body: JSON.stringify({ message: input, messages }),
       });
 
       const data = await res.json();
@@ -175,4 +175,3 @@ const AIChatBox = () => {
 };
 
 export default AIChatBox;
-

@@ -118,7 +118,7 @@ const UserDetail = () => {
   }, [refreshTrigger]);
 
   return (
-    <div className="max-w-2xl mx-auto p-6 bg-white text-black shadow-lg rounded-lg border-4 border-[#00453A]">
+    <div className="mt-10 max-w-2xl mx-auto p-6 bg-white text-black shadow-lg rounded-lg border-4 border-[#00453A]">
       <div
         className="relative flex flex-col items-center p-6 bg-cover bg-center rounded-lg shadow-lg"
         style={{ backgroundImage: `url(${images.background})` }}

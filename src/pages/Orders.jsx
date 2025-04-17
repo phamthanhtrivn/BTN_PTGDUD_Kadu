@@ -37,7 +37,7 @@ function Orders() {
   }, [token]);
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto px-20 py-10">
       <h2 className="text-2xl font-bold mb-6">Các Đơn Hàng Của Tôi</h2>
       {orderData.length > 0 ? (
         orderData.map((order) => (

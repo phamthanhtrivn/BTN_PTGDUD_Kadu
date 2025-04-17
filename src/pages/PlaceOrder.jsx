@@ -101,7 +101,7 @@ const PlaceOrder = () => {
       if (response.data.success) {
         const orderID = response.data.orderID;
 
-        toast.success(`🎉 Đặt hàng thành công! Mã đơn hàng: ${orderID}`);
+        toast.success(`🎉 Đặt hàng thành công!`);
         setCartItems([]);
         navigate(`/orders`);
       }

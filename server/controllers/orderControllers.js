@@ -2,18 +2,13 @@ import orderModel from "../models/orderModel.js";
 import User from "../models/userModel.js";
 
 
-// Tìm người dùng trong DB theo email ⇒ lấy userData._id
-// const userOrders = async (req, res) => {
-//   try {
-//     const { email } = req.body;
-//     const userData = await User.findOne({ email });
-//     const orders = await orderModel.find({ userID: userData._id });
-//     res.json({ success: true, orders });
-//   } catch (error) {
-//     console.log(error);
-//     res.json({ success: false, message: error.message });
-//   }
-// };
+// Hàm tạo mã đơn hàng
+const generateOrderCode = () => {
+  const date = new Date();
+  const yyyymmdd = date.toISOString().split("T")[0].replace(/-/g, "");
+  const randomNum = Math.floor(Math.random() * 900 + 100); //3số ngẫu nhiên
+  return `KDU-${yyyymmdd}-${randomNum}`;
+};
 
 // Tăng tính bảo mật => Lấy đơn hàng theo userID từ token xác thực – an toàn, bảo mật hơn.
 const userOrders = async (req, res) => {
@@ -35,6 +30,7 @@ const placeOrder = async (req, res) => {
 
     const orderData = {
       userID, 
+      code: generateOrderCode(),
       items,
       address,
       amount,

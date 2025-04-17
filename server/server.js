@@ -21,6 +21,7 @@ app.use(express.json());
 app.use("/auth", userRoute);
 app.use("/cart", cartRoute);
 app.use("/order", orderRoute)
+app.use("/ai-assistant", aiRoute);
 
 app.get("/", (req, res) => {
       res.send("API Working");
@@ -29,4 +30,4 @@ app.get("/", (req, res) => {
 app.listen(PORT, () => {
       console.log(`✅ Server is running on http://localhost:${PORT}`);
 });
-app.use("/ai-assistant", aiRoute);
+

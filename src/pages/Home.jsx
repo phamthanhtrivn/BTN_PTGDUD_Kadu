@@ -1,9 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { fetchProducts } from "../utils/api.js";
 import Banner from "../components/Banner";
-import "../styles/CustomerReviews.css";
-import "../styles/ProductItem.css";
-import AIChatBox from "../components/AIChatBox.jsx";
 
 import CustomerReviews from "../components/CustomerReviews";
 import NewsCarousel from "../components/NewsCarousel.jsx";
@@ -13,7 +10,8 @@ import WhyChooseUs from "../components/WhyChooseUs.jsx";
 
 const Home = () => {
   const [products, setProducts] = useState([]);
-  const [activeTab, setActiveTab] = useState("new");
+  // const [activeTab, setActiveTab] = useState("new");
+
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -30,9 +28,9 @@ const Home = () => {
   //   featured: products.filter((p) => p.category === "featured"),
   //   sale: products.filter((p) => p.category === "sale"),
   // };
-  const handleTabChange = useCallback((tab) => {
-    setActiveTab(tab);
-  }, []);
+  // const handleTabChange = useCallback((tab) => {
+  //   setActiveTab(tab);
+  // }, []);
 
   const tabClasses = (tab) =>
     `px-4 py-2 cursor-pointer transition-all duration-300 ${
@@ -46,10 +44,10 @@ const Home = () => {
       <p className="text-center text-gray-500 py-10">Đang tải dữ liệu...</p>
     );
 
-  if (!products.length)
-    return (
-      <p className="text-center text-red-500 py-10">⚠ Không có sản phẩm nào!</p>
-    );
+  // if (!products.length)
+  //   return (
+  //     <p className="text-center text-red-500 py-10">⚠ Không có sản phẩm nào!</p>
+  //   );
 
   return (
     <div className="bg-gray-50">

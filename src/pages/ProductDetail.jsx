@@ -27,7 +27,7 @@ const ProductDetail = () => {
   }, []);
 
   return (
-    <div>
+    <div className="px-20 py-10">
       <div className="flex flex-col md:flex-row gap-10">
         <div className="w-full md:w-[50%]">
           <img className="w-full h-auto" src={product.image} alt="image" />

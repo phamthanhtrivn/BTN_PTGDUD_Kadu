@@ -99,7 +99,7 @@ const PlaceOrder = () => {
       );
 
       if (response.data.success) {
-        const orderID = response.data.orderID;
+        // const orderID = response.data.orderID;
 
         toast.success(`🎉 Đặt hàng thành công!`);
         setCartItems([]);
@@ -122,7 +122,7 @@ const PlaceOrder = () => {
   return (
     <form
       onSubmit={handleSubmitOrder}
-      className="flex flex-col md:flex-row justify-between items-start gap-10"
+      className="flex flex-col md:flex-row justify-between items-start gap-10 px-20 py-10 mt-5"
     >
       <div className="w-full flex flex-col gap-4 lg:w-1/3">
         <div className="text-xl sm:text-2xl mb-1">

@@ -79,7 +79,7 @@ function Cart() {
   };
 
   return (
-    <div>
+    <div className="px-20 py-10 ">
       <div className="flex flex-col sm:flex-row sm:justify-between gap-5">
         <h1 className="text-2xl font-medium">Giỏ hàng</h1>
         {cartData.length > 0 && (
